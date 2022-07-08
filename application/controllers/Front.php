@@ -22,19 +22,4 @@ class Front extends MY_Controller {
         $this->template->write_view("content", 'home',$D);
         $this->template->render();
     }
-
-    public function act_pmi($idPmiNews,$lokasi_id){
-        //pilih kronologis akhir
-        //deteksi mobile berlaku disini ketika redirect
-    }
-
-    public function kronologi_lokasi_baru_mobile($idPmiNews){
-    }
-
-    public function kronologi_lokasi_baru($idPmiNews){
-    }
-
-    public function modif_kronologi_lokasi($head_kronologi_id){
-
-    }
 }
