@@ -33,22 +33,53 @@ class Kronologi extends MY_Controller {
         }
         
         if(empty($kronologiId)) redirect(BASEURL.'/kronologi/kronologi_lokasi_baru'.$mobileText.'/'.$this->pmi.'/','refresh');
-        redirect(BASEURL.'/kronologi/modif_kronologi_lokasi'.$mobileText.'/'.$kronologiId.'/','refresh');
+        redirect(BASEURL.'/kronologi/kronologi_lokasi_exist'.$mobileText.'/'.$kronologiId.'/','refresh');
+    }
+
+    private function get_last_status(){
+        foreach($this->config->item('pmiInNews') as $v)
+            if($v['id'] == $this->pmi) return $v['act'];
+        exit('pmi not found');
+    }
+
+    private function get_next_status(){
+        $status_sekarang = $this->get_last_status();
+        switch($status_sekarang){
+            case 'D':$n = ['P'];
+            break;
+            case 'P':$n = ['D','S'];
+            break;
+            case 'S':$n = ['E'];
+            break;
+            default:$n = [];
+            break;
+        }
+        return $n;
     }
 
     public function kronologi_lokasi_baru_mobile($idPmiNews){
-        exit('lokasi baru kronologi baru mobile');
+        $this->pmi = $idPmiNews;
+        $next = $this->get_next_status();
+        exit('lokasi baru kronologi baru mobile, status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
     }
 
     public function kronologi_lokasi_baru($idPmiNews){
-        exit('lokasi baru kronologi baru pc');
+        $this->pmi = $idPmiNews;
+        $next = $this->get_next_status();
+        exit('lokasi baru kronologi baru pc, status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
     }
 
-    public function modif_kronologi_lokasi_mobile($head_kronologi_id){
-        exit('lokasi exist kronologi baru mobile');
+    public function kronologi_lokasi_exist_mobile($head_kronologi_id){
+        $e = explode('.',$head_kronologi_id);
+        $this->pmi = $e[0].'.'.$e[1];
+        $next = $this->get_next_status();
+        exit('lokasi exist kronologi baru mobile, status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
     }
 
-    public function modif_kronologi_lokasi($head_kronologi_id){
-        exit('lokasi exist kronologi baru pc');
+    public function kronologi_lokasi_exist($head_kronologi_id){
+        $e = explode('.',$head_kronologi_id);
+        $this->pmi = $e[0].'.'.$e[1];
+        $next = $this->get_next_status();
+        exit('lokasi exist kronologi baru pc, status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
     }
 }
