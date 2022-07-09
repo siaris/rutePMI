@@ -12,16 +12,16 @@ $app['provinsi'] = ['31'=>'DKI Jakarta','33'=>'Jawa Tengah',
 '61'=>'Kalimantan Barat',
 '62'=>'Kalimantan Tengah'];
 $app['provinsiDefault'] = '31';
-$app['pmiInNews'] = [['id'=>'1.nik001','act'=>'D'],
-['id'=>'1.nik002','act'=>'D'],
-['id'=>'1.nik003','act'=>'P'],
+$app['pmiInNews'] = [['id'=>'1.nik001','act'=>'P0'],
+['id'=>'1.nik002','act'=>'P'],
+['id'=>'1.nik003','act'=>'D'],
 ['id'=>'2.nik006','act'=>'S'],
 ['id'=>'2.nik007','act'=>'E']];
-$app['pmiKronologi'] = ['1.nik002.34'=>['D:tiba di jogja','P:berangkat dari jogja'],
-'1.nik003.31'=>['D:tiba di Jakarta'],
-'2.nik006.31'=>['D:tiba di Jakarta','P:tujuan akhir di jakarta'],
-'2.nik007.61'=>['D:tiba di Kalimantan Barat','P:pergi dari Kalimantan Barat'],
-'2.nik007.36'=>['D:tiba di Banten','P:tujuan akhir di Banten','E:selesai di Banten']
+$app['pmiKronologi'] = ['1.nik002.34'=>['P0->D:tiba di jogja','D->P:berangkat dari jogja'],
+'1.nik003.31'=>['P0->D:tiba di Jakarta'],
+'2.nik006.31'=>['P0->D:tiba di Jakarta','D->S:tujuan akhir di jakarta'],
+'2.nik007.61'=>['P0->D:tiba di Kalimantan Barat','D->P:pergi dari Kalimantan Barat'],
+'2.nik007.36'=>['P->D:tiba di Banten','D->S:tujuan akhir di Banten','S->E:selesai di Banten']
 ];
 
 

@@ -9,7 +9,8 @@ class Kronologi extends MY_Controller {
 	    $this->template->set_template("template_admin_panel");
         // $this->load->model('mwargamodel');
         $this->isMobile = false;
-        $this->my_province = '31';
+        $this->load->library('session');
+        $this->my_province = $this->session->userdata('location') !== null?$this->session->userdata('location'):$this->config->item('provinsiDefault');
     }
 
     public function act_pmi($idPmiNews){
@@ -39,9 +40,11 @@ class Kronologi extends MY_Controller {
     private function get_next_status(){
         $status_sekarang = $this->get_last_status();
         switch($status_sekarang){
-            case 'D':$n = ['P'];
+            case 'P0':$n = ['D'];
             break;
-            case 'P':$n = ['D','S'];
+            case 'D':$n = ['P','S'];
+            break;
+            case 'P':$n = ['D'];
             break;
             case 'S':$n = ['E'];
             break;
