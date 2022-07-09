@@ -2,21 +2,10 @@
 <section class="content" id="app">
 <div class="row">
     <div class="col-lg-3 col-xs-6">
-        <div class="small-box bg-aqua">
-            <div class="inner">
-                <h3>15</h3>
-                <p>KK</p>
-            </div>
-            <div class="icon">
-                <i class="fa fa-group"></i>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-xs-6">
         <div class="small-box bg-green">
             <div class="inner">
                 <h3>180</h3>
-                <p>NIK</p>
+                <p>LABOR</p>
             </div>
             <div class="icon">
                 <i class="fa fa-user-o"></i>

@@ -70,13 +70,13 @@
           </a>
         </li>
 		<li>
-          <a href="<?= BASEURL?>/front/master_warga/">
-            <i class="fa fa-address-book"></i> <span>Master Warga</span>
+          <a href="<?= BASEURL?>/news/">
+            <i class="fa fa-address-book"></i> <span>News</span>
           </a>
         </li>
 		<li>
-          <a href="<?= BASEURL.'/report/report_warga/'?>">
-            <i class="fa fa-file-text"></i> <span>Laporan Master Warga</span>
+          <a href="<?= BASEURL?>/labor/">
+            <i class="fa fa-address-book"></i> <span>PMI</span>
           </a>
         </li>
 		</ul>
@@ -88,16 +88,15 @@
 		</div>
 		<footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>SI-RT</b> 1.0
+       1.0
     </div>
-    <strong> 2<a style="color:inherit;" href="<?= BASEURL?>/hidden/bill_report/">0</a>22<?= date('Y') == '2022'?'':' - '.date('Y')?> siaris</strong>
+    <strong> 2022<?= date('Y') == '2022'?'':' - '.date('Y')?> siaris</strong>
   </footer>
 		</div>
 		<?=$js?>
         <?=$js_bottom_scripts ?>
 	</body>
 	<script>
-		console.info('hehe');
 		$('.sidebar-toggle').click()
 	</script>
 </html>
