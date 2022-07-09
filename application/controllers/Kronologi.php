@@ -13,12 +13,6 @@ class Kronologi extends MY_Controller {
     }
 
     public function act_pmi($idPmiNews){
-        //deteksi mobile berlaku disini ketika akan redirect
-        $this->load->library('Mobile_Detect');
-        $D = new Mobile_Detect();
-        if ( $D->isMobile() || $D->isTablet()) {
-            $this->isMobile = true;
-        }
         $this->pmi = $idPmiNews;
         $this->_route_page();
         
@@ -57,29 +51,32 @@ class Kronologi extends MY_Controller {
         return $n;
     }
 
-    public function kronologi_lokasi_baru_mobile($idPmiNews){
-        $this->pmi = $idPmiNews;
-        $next = $this->get_next_status();
-        exit('lokasi baru kronologi baru mobile, status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
-    }
-
     public function kronologi_lokasi_baru($idPmiNews){
         $this->pmi = $idPmiNews;
         $next = $this->get_next_status();
-        exit('lokasi baru kronologi baru pc, status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
-    }
 
-    public function kronologi_lokasi_exist_mobile($head_kronologi_id){
-        $e = explode('.',$head_kronologi_id);
-        $this->pmi = $e[0].'.'.$e[1];
-        $next = $this->get_next_status();
-        exit('lokasi exist kronologi baru mobile, status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
+        //deteksi mobile berlaku disini ketika akan redirect
+        $this->load->library('Mobile_Detect');
+        $D = new Mobile_Detect();
+        if ( $D->isMobile() || $D->isTablet()) {
+            $this->isMobile = true;
+        }
+
+
+        exit('lokasi baru kronologi baru '.($this->isMobile?'mobile':'pc').', status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
     }
 
     public function kronologi_lokasi_exist($head_kronologi_id){
         $e = explode('.',$head_kronologi_id);
         $this->pmi = $e[0].'.'.$e[1];
         $next = $this->get_next_status();
-        exit('lokasi exist kronologi baru pc, status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
+
+        $this->load->library('Mobile_Detect');
+        $D = new Mobile_Detect();
+        if ( $D->isMobile() || $D->isTablet()) {
+            $this->isMobile = true;
+        }
+
+        exit('lokasi exist kronologi baru '.($this->isMobile?'mobile':'pc').', status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
     }
 }
