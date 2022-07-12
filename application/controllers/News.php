@@ -19,6 +19,7 @@ class News extends MY_Controller {
         ->unset_delete()
         ->columns('judul','deskripsi')
         ->fields('judul','deskripsi')
+        ->callback_column('judul',function($v,$r){return '<a href="'.BASEURL.'/news_labor/index/'.$r->id.'/">'.$v.'</a>';})
         ->required_fields('judul','deskripsi');
         $D = $C->render(); 
         
