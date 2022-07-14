@@ -30,4 +30,10 @@ class User extends MY_Controller {
         }
         return;
     }
+
+    public function set_sess_location($id){
+        $this->load->library('session');
+        $this->session->set_userdata("location", $id);
+        exit('set lokasi di '.$id);
+    }
 }
