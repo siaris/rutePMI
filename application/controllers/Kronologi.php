@@ -16,7 +16,6 @@ class Kronologi extends MY_Controller {
     public function act_pmi($idPmiNews){
         $this->pmi = $idPmiNews;
         $this->_route_page();
-        
     }
 
     private function _route_page(){
