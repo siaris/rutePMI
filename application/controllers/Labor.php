@@ -7,23 +7,45 @@ class Labor extends MY_Controller {
         parent::__construct();
         $this->load->library('template');
 	    $this->template->set_template("template_admin_panel");
-        // $this->load->model('labormodel');
+        $this->load->model('Labormodel');
     }
 	
 	public function index(){
 		$this->prep_bootstrap();
-
         $this->load->library('grocery_crud/Grocery_CRUD_extended');
         $C = new Grocery_CRUD_extended();
+        // $this->cmt = $this->_get_cmt();
+        $this->get_j = [];
         $C->set_table('labor')
         ->unset_delete()
         ->columns('nik','nama')
-        ->fields('nik','nama')
+        ->fields('nik','nama','json_v','alamat_domisili')
         ->unique_fields('nik')
-        ->required_fields('nik','nama');
+        ->callback_edit_field('alamat_domisili',function($v,$r){
+            $this->get_j = $this->get_j($r);
+            return isset($this->get_j['alamat_domisili'])?'<textarea name="alamat_domisili">'.$this->get_j['alamat_domisili'].'</textarea>':'<textarea name="alamat_domisili"></textarea>';
+        })
+        ->callback_add_field('alamat_domisili',function(){
+            return '<textarea name="alamat_domisili"></textarea>';
+        })
+        ->callback_before_insert(array($this,'collect_data'))
+        ->callback_before_update(array($this,'collect_data'))
+        ->field_type('json_v', 'invisible')
+        ->required_fields('nik','nama','alamat_domisili');
         $D = $C->render(); 
         
         $this->template->write_view("content", 'grocery_crud_content',$D);
         $this->template->render();
 	}
+
+    function collect_data($p){
+        $p['json_v'] = json_encode(['alamat_domisili'=>$p['alamat_domisili']]);
+		unset($p['alamat_domisili']);
+        return $p;
+    }
+
+    public function get_j($id){
+        $j = $this->Labormodel->queryOne('id = '.$id,'json_v','');
+        return !empty($j)?json_decode($j,TRUE):[];
+    }
 }
