@@ -20,10 +20,13 @@ class News_labor extends MY_Controller {
         $C->set_table('news_labor')
         ->unset_delete()
         ->unset_edit()
-        ->columns('news_id','labor_id')
+        ->columns('news_id','labor_id','qr')
         ->set_relation('news_id','news','judul')
         ->set_relation('labor_id','labor','nama')
         ->fields('news_id','labor_id','uuid','json')
+        ->callback_column('qr',function($v,$r){
+            return '<a href="'.BASEURL.json_decode($r->json,TRUE)['qrcode'].'">hehe</a>';
+        })
         ->display_as('news_id','berita kepulangan')
         ->display_as('labor_id','PMI')
         ->field_type('uuid', 'invisible')
