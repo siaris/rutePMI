@@ -25,7 +25,7 @@ class News_labor extends MY_Controller {
         ->set_relation('labor_id','labor','nama')
         ->fields('news_id','labor_id','uuid','json')
         ->callback_column('qr',function($v,$r){
-            return '<a href="'.BASEURL.json_decode($r->json,TRUE)['qrcode'].'">hehe</a>';
+            return '<a href="'.BASEURL.json_decode($r->json,TRUE)['qrcode'].'">lihat qrcode</a>';
         })
         ->display_as('news_id','berita kepulangan')
         ->display_as('labor_id','PMI')

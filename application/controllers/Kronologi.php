@@ -31,8 +31,12 @@ class Kronologi extends MY_Controller {
     }
 
     private function get_last_status(){
-        foreach($this->config->item('pmiInNews') as $v)
-            if($v['id'] == $this->pmi) return $v['act'];
+        // foreach($this->config->item('pmiInNews') as $v)
+        //     if($v['id'] == $this->pmi) return $v['act'];
+        // exit('pmi not found');
+        $this->load->model('NewsLabormodel');
+        $v = $this->NewsLabormodel->queryOne('uuid = "'.$this->pmi.'" and status <> "E"','status',null);
+        if(!empty($v)) return $v;
         exit('pmi not found');
     }
 
