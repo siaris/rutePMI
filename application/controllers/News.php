@@ -19,7 +19,7 @@ class News extends MY_Controller {
         ->unset_delete()
         ->columns('judul','deskripsi')
         ->fields('judul','deskripsi')
-        ->callback_column('judul',function($v,$r){return '<a href="'.BASEURL.'/news_labor/index/'.$r->id.'/">'.$v.'</a>';})
+        ->callback_column('judul',function($v,$r){return $v.' &nbsp;&nbsp;&nbsp;<a class="btn btn-small" href="'.BASEURL.'/news_labor/index/'.$r->id.'/">input PMI</a>';})
         ->required_fields('judul','deskripsi');
         $D = $C->render(); 
         

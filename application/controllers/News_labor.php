@@ -37,7 +37,7 @@ class News_labor extends MY_Controller {
         ->where('news_id',$newsId)
         ->required_fields('judul','deskripsi')
         ->callback_before_insert(array($this,'collect_insert_data'));
-        $D = $C->render('<h3>Pemulangan PMI Berita : '.$this->judulBerita.'</h3>'); 
+        $D = $C->render('<a href="'.BASEURL.'/news/" ><i class="fa fa-arrow-left"></i></a><h3>Pemulangan PMI Berita : '.$this->judulBerita.'</h3>'); 
         
         $this->template->write_view("content", 'grocery_crud_content',$D);
         $this->template->render();
