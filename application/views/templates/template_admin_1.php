@@ -79,6 +79,11 @@
             <i class="fa fa-address-book"></i> <span>PMI</span>
           </a>
         </li>
+		<li>
+          <a href="<?= BASEURL?>/lokasi/set_my/">
+            <i class="fa fa-map-marker"></i> <span>Set Lokasi</span>
+          </a>
+        </li>
 		</ul>
 		</aside>
 		
