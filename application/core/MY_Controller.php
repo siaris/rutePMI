@@ -74,7 +74,7 @@ class MY_Controller extends CI_Controller {
             <link rel="stylesheet" href="'.BASEURL.'/assets/css/skins/_all-skins.min.css">
             <link rel="stylesheet" href="'.BASEURL.'/components/font-awesome/css/font-awesome.min.css">', FALSE);
 
-        $this->template->write('js_top_scripts','<script src="'.BASEURL.'/components/jquery/dist/jquery.min.js"></script>',FALSE);
+        $this->template->write('js_top_scripts','<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha512-bnIvzh6FU75ZKxp0GXLH9bewza/OIw6dLVh9ICg0gogclmYGguQJWl8U30WpbsGTqbIiAwxTsbe76DErLq5EDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',FALSE);
 
         $this->template->write('js', '
                 <script src="'.BASEURL.'/assets/js/adminlte.min.js"></script>
