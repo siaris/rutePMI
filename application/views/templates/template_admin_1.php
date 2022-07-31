@@ -81,7 +81,7 @@
         </li>
 		<li>
           <a href="<?= BASEURL?>/lokasi/set_my/">
-            <i class="fa fa-map-marker"></i> <span>Set Lokasi</span>
+            <i class="fa fa-map-marker"></i> <span>Lokasi Simulasi Pemulangan</span>
           </a>
         </li>
 		</ul>

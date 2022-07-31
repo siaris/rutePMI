@@ -58,31 +58,42 @@ class Kronologi extends MY_Controller {
     }
 
     public function kronologi_lokasi_baru($idPmiNews){
+        $this->prep_bootstrap();
         $this->pmi = $idPmiNews;
         $next = $this->get_next_status();
 
         //deteksi mobile berlaku disini ketika akan redirect
         $this->load->library('Mobile_Detect');
         $D = new Mobile_Detect();
+        $v = 'new';
         if ( $D->isMobile() || $D->isTablet()) {
             $this->isMobile = true;
+            $v = 'new_mobile';
         }
 
+        $this->template->write_view("content", 'kronologi/'.$v,['next'=>$next,'idPmiNews'=>$this->pmi,'my_province'=>$this->my_province,'allP'=>$this->config->item('provinsi'),'allS'=>$this->config->item('statusDesc')]);
+        $this->template->render();
 
-        exit('lokasi baru kronologi baru '.($this->isMobile?'mobile':'pc').', status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
+        // exit('lokasi baru kronologi baru '.($this->isMobile?'mobile':'pc').', status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
     }
 
     public function kronologi_lokasi_exist($head_kronologi_id){
+        $this->prep_bootstrap();
         $e = explode('.',$head_kronologi_id);
         $this->pmi = $e[0].'.'.$e[1];
         $next = $this->get_next_status();
 
         $this->load->library('Mobile_Detect');
         $D = new Mobile_Detect();
+        $v = 'new';
         if ( $D->isMobile() || $D->isTablet()) {
             $this->isMobile = true;
+            $v = 'new_mobile';
         }
 
-        exit('lokasi exist kronologi baru '.($this->isMobile?'mobile':'pc').', status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
+        $this->template->write_view("content", 'kronologi/'.$v,['next'=>$next,'idPmiNews'=>$this->pmi,'my_province'=>$this->my_province,'allP'=>$this->config->item('provinsi'),'allS'=>$this->config->item('statusDesc')]);
+        $this->template->render();
+
+        // exit('lokasi exist kronologi baru '.($this->isMobile?'mobile':'pc').', status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
     }
 }
