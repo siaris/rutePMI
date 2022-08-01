@@ -23,6 +23,13 @@ $app['pmiKronologi'] = ['1.nik002.34'=>['P0->D:tiba di jogja','D->P:berangkat da
 '2.nik007.61'=>['P0->D:tiba di Kalimantan Barat','D->P:pergi dari Kalimantan Barat'],
 '2.nik007.36'=>['P->D:tiba di Banten','D->S:tujuan akhir di Banten','S->E:selesai di Banten']
 ];
+$app['statusDesc'] = [
+    'P0'=>'bertolak pulang',
+    'D'=>'tiba',
+    'P'=>'bertolak menuju tujuan berikutnya',
+    'S'=>'sampai di tujuan',
+    'E'=>'pemulangan selesai'
+];
 
 
 $config = $app;
