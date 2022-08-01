@@ -8,7 +8,6 @@ class Lokasi extends MY_Controller {
         $this->load->library('template');
 	    $this->template->set_template("template_admin_panel");
         $this->load->library('session');
-        $this->my_province = $this->session->userdata('location') !== null?$this->session->userdata('location'):$this->config->item('provinsiDefault');
     }
 
     public function set_my(){

@@ -70,18 +70,24 @@
           </a>
         </li>
 		<li>
-          <a href="<?= BASEURL?>/news/">
-            <i class="fa fa-address-book"></i> <span>News</span>
+          <a href="<?= BASEURL?>/labor/">
+            <i class="fa fa-child"></i> <span>PMI</span>
           </a>
         </li>
 		<li>
-          <a href="<?= BASEURL?>/labor/">
-            <i class="fa fa-address-book"></i> <span>PMI</span>
+          <a href="<?= BASEURL?>/news/">
+            <i class="fa fa-bookmark"></i> <span>News</span>
+          </a>
+        </li>
+		<li>
+		<li>
+          <a href="<?= BASEURL?>/news_labor/all_proses/">
+            <i class="fa fa-paper-plane"></i> <span>PMI Dalam Proses</span>
           </a>
         </li>
 		<li>
           <a href="<?= BASEURL?>/lokasi/set_my/">
-            <i class="fa fa-map-marker"></i> <span>Lokasi Simulasi Pemulangan</span>
+            <i class="fa fa-map-marker"></i> <span>Set Lokasi (Simulasi)</span>
           </a>
         </li>
 		</ul>

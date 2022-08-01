@@ -10,7 +10,6 @@ class Kronologi extends MY_Controller {
         // $this->load->model('mwargamodel');
         $this->isMobile = false;
         $this->load->library('session');
-        $this->my_province = $this->session->userdata('location') !== null?$this->session->userdata('location'):$this->config->item('provinsiDefault');
     }
 
     public function act_pmi($idPmiNews){

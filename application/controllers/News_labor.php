@@ -42,6 +42,37 @@ class News_labor extends MY_Controller {
         $this->template->write_view("content", 'grocery_crud_content',$D);
         $this->template->render();
 	}
+
+    public function all_proses(){
+        $this->prep_bootstrap();
+        $this->load->model('newsmodel');
+
+        $this->load->library('grocery_crud/Grocery_CRUD_extended');
+        $C = new Grocery_CRUD_extended();
+        $C->set_table('news_labor')
+        ->unset_delete()
+        ->unset_edit()
+        ->unset_add()
+        ->unset_read()
+        ->columns('news_id','labor_id','qr')
+        ->set_relation('news_id','news','judul')
+        ->set_relation('labor_id','labor','nama')
+        ->fields('news_id','labor_id','uuid','json')
+        ->callback_column('qr',function($v,$r){
+            return '<a class="btn btn-small btn-success" href="'.BASEURL.json_decode($r->json,TRUE)['qrcode'].'">lihat qrcode</a> <a class="btn btn-small btn-success" href="'.BASEURL.'/kronologi/act_pmi/'.$r->uuid.'">proses PMI</a> ('.$r->uuid.')';
+        })
+        ->display_as('news_id','berita kepulangan')
+        ->display_as('labor_id','PMI')
+        ->field_type('uuid', 'invisible')
+        ->field_type('json', 'invisible')
+        ->where('status <>','E')
+        ->required_fields('judul','deskripsi')
+        ->callback_before_insert(array($this,'collect_insert_data'));
+        $D = $C->render(); 
+        
+        $this->template->write_view("content", 'grocery_crud_content',$D);
+        $this->template->render();
+    }
     
     function collect_insert_data($p){
         $this->load->model('labormodel');

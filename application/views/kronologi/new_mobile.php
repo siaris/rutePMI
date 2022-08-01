@@ -1,11 +1,12 @@
-<div class="content-wrapper" id = "app">
-<section class="content-header"><div class="row">
-    <h1><small>Staff <?= $allP[$my_province]?> melayani PMI:</small></h1>
-    <h1><small>{{pmi}}</small></h1>
-    </div>
+<div class="" id = "app">
+<section class="content-header">
+<h1><small>Staff <?= $allP[$my_province]?> melayani PMI:</small></h1>
+<h1><small>{{pmi}}</small></h1>
+</section>
+<section class="content-header">
     <div class="row">
-        <form action="<?= BASEURL?>/kronologi/set/" method="post">
-        <div class="col-md-6">
+        <form action="<?= BASEURL?>/kronologi/set/" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+        <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-primary">
             <div class="box-header with-border">
@@ -28,6 +29,7 @@
                   <label for="exampleInputEmail1">Deskripsi</label>
                   <textarea name="desc" class="form-control" ></textarea>
                 </div>
+                
               </div>
               <!-- /.box-body -->
 

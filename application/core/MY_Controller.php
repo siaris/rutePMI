@@ -10,6 +10,7 @@ class MY_Controller extends CI_Controller {
         $this->set('isLogin', $this->session->userdata('isLogin'));
         $this->basename = strtolower(get_class($this));
         // $this->output->enable_profiler(TRUE);
+        $this->my_province = $this->session->userdata('location') !== null?$this->session->userdata('location'):$this->config->item('provinsiDefault');
 	}
 
     public function set($key, $value) {
