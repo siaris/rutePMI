@@ -54,12 +54,26 @@ class News_labor extends MY_Controller {
         ->unset_edit()
         ->unset_add()
         ->unset_read()
-        ->columns('news_id','labor_id','qr')
+        ->columns('news_id','labor_id','qr','status','kronologi_ringkas')
         ->set_relation('news_id','news','judul')
         ->set_relation('labor_id','labor','nama')
-        ->fields('news_id','labor_id','uuid','json')
         ->callback_column('qr',function($v,$r){
             return '<a class="btn btn-small btn-success" href="'.BASEURL.json_decode($r->json,TRUE)['qrcode'].'">lihat qrcode</a> <a class="btn btn-small btn-success" href="'.BASEURL.'/kronologi/act_pmi/'.$r->uuid.'">proses PMI</a> ('.$r->uuid.')';
+        })
+        ->callback_column('status',function($v,$r){
+            return $this->config->item('statusDesc')[$v];
+        })
+        ->callback_column('kronologi_ringkas',function($v,$r){
+            $this->load->model('Kronologimodel');
+            $Rr = $this->Kronologimodel->find_all('uuid like "'.$r->uuid.'.%"','`desc`','id');
+            $r = [];
+            if(!empty($Rr))
+                array_walk($Rr,function($v) use (&$r){
+                    $d = json_decode($v['desc'],true);
+                    $r[] = $d['rute']['d'].' : '.$this->config->item('statusDesc')[$d['rute']['f']].' ---> '.$this->config->item('statusDesc')[$d['rute']['t']];
+                });
+
+            return implode('<br>',$r);
         })
         ->display_as('news_id','berita kepulangan')
         ->display_as('labor_id','PMI')

@@ -26,7 +26,7 @@ class Kronologi extends MY_Controller {
         }
         
         if(empty($kronologiId)) redirect(BASEURL.'/kronologi/kronologi_lokasi_baru'.$mobileText.'/'.$this->pmi.'/','refresh');
-        redirect(BASEURL.'/kronologi/kronologi_lokasi_exist'.$mobileText.'/'.$kronologiId.'/','refresh');
+        redirect(BASEURL.'/kronologi/kronologi_lokasi_baru'.$mobileText.'/'.$kronologiId.'/','refresh');
     }
 
     private function get_last_status(){
@@ -41,6 +41,7 @@ class Kronologi extends MY_Controller {
 
     private function get_next_status(){
         $status_sekarang = $this->get_last_status();
+        $this->last_status = $status_sekarang;
         switch($status_sekarang){
             case 'P0':$n = ['D'];
             break;
@@ -70,13 +71,11 @@ class Kronologi extends MY_Controller {
             $v = 'new_mobile';
         }
 
-        $this->template->write_view("content", 'kronologi/'.$v,['next'=>$next,'idPmiNews'=>$this->pmi,'my_province'=>$this->my_province,'allP'=>$this->config->item('provinsi'),'allS'=>$this->config->item('statusDesc')]);
+        $this->template->write_view("content", 'kronologi/'.$v,['next'=>$next,'idPmiNews'=>$this->pmi,'my_province'=>$this->my_province,'allP'=>$this->config->item('provinsi'),'allS'=>$this->config->item('statusDesc'),'last_status'=>$this->last_status]);
         $this->template->render();
-
-        // exit('lokasi baru kronologi baru '.($this->isMobile?'mobile':'pc').', status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
     }
 
-    public function kronologi_lokasi_exist($head_kronologi_id){
+    public function kronologi_lokasi_exist_not($head_kronologi_id){
         $this->prep_bootstrap();
         $e = explode('.',$head_kronologi_id);
         $this->pmi = $e[0].'.'.$e[1];
@@ -90,9 +89,26 @@ class Kronologi extends MY_Controller {
             $v = 'new_mobile';
         }
 
-        $this->template->write_view("content", 'kronologi/'.$v,['next'=>$next,'idPmiNews'=>$this->pmi,'my_province'=>$this->my_province,'allP'=>$this->config->item('provinsi'),'allS'=>$this->config->item('statusDesc')]);
+        $this->template->write_view("content", 'kronologi/'.$v,['next'=>$next,'idPmiNews'=>$this->pmi,'my_province'=>$this->my_province,'allP'=>$this->config->item('provinsi'),'allS'=>$this->config->item('statusDesc'),'last_status'=>$this->last_status]);
         $this->template->render();
+    }
 
-        // exit('lokasi exist kronologi baru '.($this->isMobile?'mobile':'pc').', status yg bisa dipilih '.(empty($next)?'tidak ada':implode(' dan ',$next)));
+    public function set_status(){
+        if($this->input->post()){
+            $s = $this->input->post();
+            $this->load->model(['NewsLaborModel','Kronologimodel']);
+            $this->NewsLaborModel->save($data = ['status'=>$s['status']], $id = $s['pmi_news']);
+            //set status sebelumnya
+            $rute = ['f'=>$s['last_status'],'t'=>$s['status'],'d'=>date('Y-m-d H:i')];
+            $desc = $s['desc'];
+            $loc = $s['loc'];
+            $data['desc'] = json_encode(['rute'=>$rute,'ket'=>$desc,'lokasi'=>$loc]);
+            $data['status_kronologi'] = $s['status'];
+            $data['uuid'] = $s['pmi_news'].".".$s['loc'];
+
+            $this->Kronologimodel->save($data);
+            redirect(BASEURL.'/news_labor/all_process/','refresh');
+        }
+        return;
     }
 }
