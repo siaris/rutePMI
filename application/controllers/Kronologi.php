@@ -107,7 +107,7 @@ class Kronologi extends MY_Controller {
             $data['uuid'] = $s['pmi_news'].".".$s['loc'];
 
             $this->Kronologimodel->save($data);
-            redirect(BASEURL.'/news_labor/all_process/','refresh');
+            redirect(BASEURL.'/news_labor/all_proses/','refresh');
         }
         return;
     }
