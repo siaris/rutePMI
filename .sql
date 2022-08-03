@@ -7892,3 +7892,35 @@ ALTER TABLE `wilayah`
 ALTER TABLE `wilayah`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10088;
 COMMIT;
+
+
+CREATE TABLE `kronologi_perjalanan` (
+  `id` int(5) NOT NULL,
+  `uuid` varchar(31) NOT NULL,
+  `desc` longtext NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status_kronologi` varchar(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `kronologi_perjalanan`
+--
+ALTER TABLE `kronologi_perjalanan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `uuid` (`uuid`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `kronologi_perjalanan`
+--
+ALTER TABLE `kronologi_perjalanan`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+COMMIT;
