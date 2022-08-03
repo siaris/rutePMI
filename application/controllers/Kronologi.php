@@ -96,8 +96,8 @@ class Kronologi extends MY_Controller {
     public function set_status(){
         if($this->input->post()){
             $s = $this->input->post();
-            $this->load->model(['NewsLaborModel','Kronologimodel']);
-            $this->NewsLaborModel->save($data = ['status'=>$s['status']], $id = $s['pmi_news']);
+            $this->load->model(['NewsLabormodel','Kronologimodel']);
+            $this->NewsLabormodel->save($data = ['status'=>$s['status']], $id = $s['pmi_news']);
             //set status sebelumnya
             $rute = ['f'=>$s['last_status'],'t'=>$s['status'],'d'=>date('Y-m-d H:i')];
             $desc = $s['desc'];
