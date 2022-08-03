@@ -336,8 +336,8 @@ class MY_Model extends CI_Model {
         $this->_assign_libraries('admin_session');
         if ($data) {
             $this->data = $data;
-            $this->data['last_upd_by'] = $this->admin_session->getSession('username');
-            $this->data['last_upd_date'] = date("Y-m-d H:i:s");
+            // $this->data['last_upd_by'] = $this->admin_session->getSession('username');
+            // $this->data['last_upd_date'] = date("Y-m-d H:i:s");
         }
 
         foreach ($this->data as $key => $value) {
@@ -347,7 +347,7 @@ class MY_Model extends CI_Model {
         }
 
         if ($xss) {
-            $this->data = $this->input->xss_clean($this->data);
+            // $this->data = $this->input->xss_clean($this->data);
         }
 
         if ($id != null) {
@@ -517,6 +517,20 @@ class MY_Model extends CI_Model {
     function queryOne($conditions = NULL, $fields, $order) {
         $result = $this->find($conditions, $fields, $order);
         return $result[$fields];
+    }
+
+    /*
+     * get table hacked by Aris for PostgreSQL with more than one schema
+     */
+    function set_table($table) {
+        if ($this->db->dbdriver == 'postgre') {
+            if (preg_match('|\.|', $table)) {
+                $table_array = explode('.', $table);
+                return $table_array[1];
+            }
+            return $table;
+        }
+        return $table;
     }
 
 }
