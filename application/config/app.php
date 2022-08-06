@@ -3,14 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $app['actDefault'] = 'D';
 $app['actList'] = ['D'=>'datang','P'=>'pergi','S'=>'stop','E'=>'selesai'];
 $app['provinsi'] = ['31'=>'DKI Jakarta','33'=>'Jawa Tengah',
-'34'=>'Di Yogyakarta',
 '35'=>'Jawa Timur',
 '36'=>'Banten',
 '51'=>'Bali',
 '52'=>'Nusa Tenggara Barat',
-'53'=>'Nusa Tenggara Timur',
-'61'=>'Kalimantan Barat',
-'62'=>'Kalimantan Tengah'];
+'61'=>'Kalimantan Barat'];
 $app['provinsiDefault'] = '31';
 $app['pmiInNews'] = [['id'=>'1.nik001','act'=>'P0'],
 ['id'=>'1.nik002','act'=>'P'],
