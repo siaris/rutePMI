@@ -19,7 +19,7 @@ class Labor extends MY_Controller {
         $C->set_table('labor')
         ->unset_delete()
         ->columns('nik','nama')
-        ->fields('nik','nama','json_v','alamat_domisili')
+        ->fields('nik','nama','json_v','alamat_domisili','kecamatan_tujuan_pemulangan')
         ->unique_fields('nik')
         ->callback_edit_field('alamat_domisili',function($v,$r){
             $this->get_j = $this->get_j($r);
@@ -27,6 +27,13 @@ class Labor extends MY_Controller {
         })
         ->callback_add_field('alamat_domisili',function(){
             return '<textarea name="alamat_domisili"></textarea>';
+        })
+        ->callback_add_field('kecamatan_tujuan_pemulangan',function(){
+            $this->load->model('Wilayahmodel');
+            $R = $this->Wilayahmodel->find_all_tujuan(array_keys($this->config->item('provinsi')));
+            $r = '<select name="tujuan">';
+            foreach($R as $v) $r .= '<option value="'.$v['id_wilayah'].'">'.$v['nama_wilayah'].'</option>';
+            return $r.'</select>';
         })
         ->callback_before_insert(array($this,'collect_data'))
         ->callback_before_update(array($this,'collect_data'))
@@ -39,8 +46,9 @@ class Labor extends MY_Controller {
 	}
 
     function collect_data($p){
-        $p['json_v'] = json_encode(['alamat_domisili'=>$p['alamat_domisili']]);
+        $p['json_v'] = json_encode(['alamat_domisili'=>$p['alamat_domisili'],'kecamatan_domisili'=>$p['tujuan']]);
 		unset($p['alamat_domisili']);
+        unset($p['tujuan']);
         return $p;
     }
 

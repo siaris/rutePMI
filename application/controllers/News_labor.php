@@ -23,7 +23,7 @@ class News_labor extends MY_Controller {
         ->columns('news_id','labor_id','qr')
         ->set_relation('news_id','news','judul')
         ->set_relation('labor_id','labor','nama')
-        ->fields('news_id','labor_id','uuid','json')
+        ->fields('news_id','labor_id','uuid','tujuan berikutnya','json')
         ->callback_column('qr',function($v,$r){
             return '<a href="'.BASEURL.json_decode($r->json,TRUE)['qrcode'].'">lihat qrcode</a> ('.$r->uuid.')';
         })
@@ -34,8 +34,13 @@ class News_labor extends MY_Controller {
         ->callback_add_field('news_id',function() use ($newsId){
             return '<input type="hidden" name="news_id" value="'.$newsId.'">'.$this->judulBerita;
         })
+        ->callback_add_field('tujuan berikutnya',function() use ($newsId){
+            $r = '<select name="tujuan">';
+            foreach($this->config->item('provinsi') as $k=>$v) $r .= '<option value="'.$k.'">'.$v.'</option>';
+            return $r.'</select>';
+        })
         ->where('news_id',$newsId)
-        ->required_fields('judul','deskripsi')
+        ->required_fields('judul','deskripsi','tujuan')
         ->callback_before_insert(array($this,'collect_insert_data'));
         $D = $C->render('<a href="'.BASEURL.'/news/" ><i class="fa fa-arrow-left"></i></a><h3>Pemulangan PMI Berita : '.$this->judulBerita.'</h3>'); 
         
@@ -58,7 +63,9 @@ class News_labor extends MY_Controller {
         ->set_relation('news_id','news','judul')
         ->set_relation('labor_id','labor','nama')
         ->callback_column('qr',function($v,$r){
-            return '<a class="btn btn-small btn-success" href="'.BASEURL.json_decode($r->json,TRUE)['qrcode'].'">lihat qrcode</a> <a class="btn btn-small btn-success" href="'.BASEURL.'/kronologi/act_pmi/'.$r->uuid.'">proses PMI</a> ('.$r->uuid.')';
+            $J = json_decode($r->json,TRUE);
+            $w = isset($J['transit'])?'staff '.$this->config->item('provinsi')[$J['transit'][count($J['transit']) - 1]]:'';
+            return '<a class="btn btn-small btn-success" href="'.BASEURL.$J['qrcode'].'">lihat qrcode</a> <a class="btn btn-small btn-success" href="'.BASEURL.'/kronologi/act_pmi/'.$r->uuid.'">proses PMI</a> ('.$r->uuid.'), akan diproses '.$w;
         })
         ->callback_column('status',function($v,$r){
             return $this->config->item('statusDesc')[$v];
@@ -111,8 +118,10 @@ class News_labor extends MY_Controller {
         $params['size'] = 10;
         $params['savename'] = ROOTPATH.'/rute/public/support/img/'.$uuid.'.png';
         $this->ciqrcode->generate($params);
+        $transit = [$p['tujuan']];
+        unset($p['tujuan']);
         
-        $p['json'] = json_encode(['qrcode'=>'/public/support/img/'.$uuid.'.png']);
+        $p['json'] = json_encode(['qrcode'=>'/public/support/img/'.$uuid.'.png','transit'=>$transit]);
         return $p;   
     }
 }
