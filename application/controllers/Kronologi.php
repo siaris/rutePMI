@@ -105,6 +105,7 @@ class Kronologi extends MY_Controller {
             $data['desc'] = json_encode(['rute'=>$rute,'ket'=>$desc,'lokasi'=>$loc]);
             $data['status_kronologi'] = $s['status'];
             $data['uuid'] = $s['pmi_news'].".".$s['loc'];
+            $data['news_labor_id'] = $s['pmi_news'];
 
             $this->Kronologimodel->save($data);
             redirect(BASEURL.'/news_labor/all_proses/','refresh');
