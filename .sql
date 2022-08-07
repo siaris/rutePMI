@@ -7924,3 +7924,6 @@ ALTER TABLE `kronologi_perjalanan`
 ALTER TABLE `kronologi_perjalanan`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
 COMMIT;
+
+
+ALTER TABLE `kronologi_perjalanan` ADD `news_labor_id` VARCHAR(31) NOT NULL AFTER `uuid`, ADD INDEX (`news_labor_id`); 
