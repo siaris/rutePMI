@@ -97,7 +97,10 @@ class Kronologi extends MY_Controller {
         if($this->input->post()){
             $s = $this->input->post();
             $this->load->model(['NewsLabormodel','Kronologimodel']);
-            $this->NewsLabormodel->save($data = ['status'=>$s['status']], $id = $s['pmi_news']);
+            $jsonNewsLabor = $this->NewsLabormodel->queryOne('uuid = "'.$s['pmi_news'].'"','json',null);
+            $decodeJNewsLabor = json_decode($jsonNewsLabor,true);
+            $decodeJNewsLabor['transit'][] = $s['transit'];
+            $this->NewsLabormodel->save($D = ['status' => $s['status'], 'json'=>json_encode($decodeJNewsLabor)], $id = $s['pmi_news']);
             //set status sebelumnya
             $rute = ['f'=>$s['last_status'],'t'=>$s['status'],'d'=>date('Y-m-d H:i')];
             $desc = $s['desc'];
@@ -108,6 +111,7 @@ class Kronologi extends MY_Controller {
             $data['news_labor_id'] = $s['pmi_news'];
 
             $this->Kronologimodel->save($data);
+            
             redirect(BASEURL.'/news_labor/all_proses/','refresh');
         }
         return;

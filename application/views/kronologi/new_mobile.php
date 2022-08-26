@@ -21,10 +21,17 @@
               <input type="hidden" name="last_status" value="<?= $last_status?>">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Status</label>
-                  <select name="status" class="form-control" >
+                  <select name="status" id="status" class="form-control" onchange="app.readStatus()">
+                    <option value="">pilih</option>
                     <?foreach($next as $n){?>
                         <option value="<?= $n?>"><?= $allS[$n]?></option>
                     <?}?>
+                  </select>
+                </div>
+                <div class="form-group" id="div-transit">
+                <label for="exampleInputEmail1">Tujuan Berikutnya</label>
+                <select name="transit" id="transit" class="form-control">
+                    <option v-for="(item, index) of province_available" :value="index">{{item}}</option>
                   </select>
                 </div>
                 <div class="form-group">
@@ -36,7 +43,7 @@
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>
           </div>
