@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.12/dc.min.css" integrity="sha512-uHCMYHmu81oruDl1bOy5twa5LKyoU2WkCx5F+nHueev7RPOlwBHFSj92QIqisAwTMMvpirUVp1ziM7W8nxUOJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <section class="content" id="app">
 <div class="row">
-    <div class="col-lg-3 col-xs-6">
+<?/*    
+<div class="col-lg-3 col-xs-6">
         <div class="small-box bg-green">
             <div class="inner">
                 <h3>180</h3>
@@ -12,7 +13,7 @@
             </div>
         </div>
     </div>
-
+*/?>
 </div>
 </section>
 <script src="https://unpkg.com/vue@2.3.2/dist/vue.min.js"></script>
