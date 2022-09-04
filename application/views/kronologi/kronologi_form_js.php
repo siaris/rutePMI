@@ -31,7 +31,7 @@ var app = new Vue({
             if(pmi_dest != this.my_province){
                 let allP = ALL_PROVINCE
                 alert('PMI harus diproses oleh staff '+allP[pmi_dest])
-                window.location.assign('/rute/news_labor/all_proses/')
+                window.location.assign('/news_labor/all_proses/')
             }
             $('#submit').removeClass('disabled')
             return
