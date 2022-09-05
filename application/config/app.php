@@ -27,6 +27,20 @@ $app['statusDesc'] = [
     'S'=>'sampai di tujuan',
     'E'=>'pemulangan selesai'
 ];
+$app['agama'] = [
+    '1'=>'Islam',
+    '2'=>'Katolik',
+    '3'=>'Protestan',
+    '4'=>'Hindu',
+    '5'=>'Budha'
+];
+$app['negara'] = [
+    '193'=>'Arab Saudi',
+    '158'=>'Malaysia',
+    '198'=>'Singapura',
+    '187'=>'Qatar',
+    '57'=>'Jerman'
+];
 
 
 $config = $app;
