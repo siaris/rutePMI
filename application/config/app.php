@@ -41,6 +41,27 @@ $app['negara'] = [
     '187'=>'Qatar',
     '57'=>'Jerman'
 ];
+$app['jenis_profesi'] = [
+    '1'=>'Formal',
+    '2'=>'Informal',
+    '3'=>'Pelaut Awak Kapal',
+    '4'=>'Pelaut Perikanan'
+];
+$app['status_nikah'] = [
+    '1'=>'Cerai',
+    '2'=>'Kawin',
+    '3'=>'Belum Kawin'
+];
+$app['pendidikan'] = [
+    '1'=>'Tidak Sekolah',
+    '2'=>'SD',
+    '3'=>'SLTP',
+    '4'=>'SMU/SMK',
+];
+$app['jenis_kelamin'] = [
+    'L'=>'Laki-laki',
+    'P'=>'Perempuan'
+];
 
 
 $config = $app;
