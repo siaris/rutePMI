@@ -8,6 +8,7 @@ class Labor extends MY_Controller {
         $this->load->library('template');
 	    $this->template->set_template("template_admin_panel");
         $this->load->model('Labormodel');
+        $this->load->helper('app');
         $this->listAgama = $this->config->item('agama');
         $this->listNegara = $this->config->item('negara');
         $this->jenisProfesi = $this->config->item('jenis_profesi');
@@ -31,6 +32,25 @@ class Labor extends MY_Controller {
         ->callback_edit_field('alamat_domisili',function($v,$r){
             $this->get_j = $this->get_j($r);
             return isset($this->get_j['alamat_domisili'])?'<textarea name="alamat_domisili">'.$this->get_j['alamat_domisili'].'</textarea>':'<textarea name="alamat_domisili"></textarea>';
+        })
+        ->callback_add_field('alamat_domisili',function(){
+            return '<textarea name="alamat_domisili"></textarea>';
+        })->field_type('tgl_lahir', 'date', 'hehe')
+        ->callback_add_field('kecamatan_tujuan_pemulangan',function(){
+            $this->load->model('Wilayahmodel');
+            $R = $this->Wilayahmodel->find_all_tujuan(array_keys($this->config->item('provinsi')));
+            $r = '<select name="tujuan">';
+            foreach($R as $v) $r .= '<option value="'.$v['id_wilayah'].'">'.$v['nama_wilayah'].'</option>';
+            return $r.'</select>';
+        })->callback_edit_field('kecamatan_tujuan_pemulangan',function($V,$r){
+            $this->load->model('Wilayahmodel');
+            $R = $this->Wilayahmodel->find_all_tujuan(array_keys($this->config->item('provinsi')));
+            $r = '<select name="tujuan">';
+            
+            foreach($R as $v){
+                $s = $v == $this->get_j['kecamatan_domisili'] ?'selected':''; 
+                $r .= '<option '.$s.' value="'.$v['id_wilayah'].'">'.$v['nama_wilayah'].'</option>';}
+            return $r.'</select>';
         })
         ->callback_add_field('agama',function($v,$r){
             return $this->val_select('agama','',$this->listAgama);
@@ -67,25 +87,6 @@ class Labor extends MY_Controller {
         ->callback_edit_field('perkiraan_tgl_mulai_kerja',function($v,$r){ return $this->val_input('perkiraan_tgl_mulai_kerja',$this->get_j['TK-perkiraan_tgl_mulai_kerja']); })
         ->callback_edit_field('asuransi',function($v,$r){ return $this->val_input('asuransi',$this->get_j['TK-asuransi']); })
         ->callback_edit_field('nomor_asuransi',function($v,$r){ return $this->val_input('nomor_asuransi',$this->get_j['TK-nomor_asuransi']); })
-        ->callback_add_field('alamat_domisili',function(){
-            return '<textarea name="alamat_domisili"></textarea>';
-        })->field_type('tgl_lahir', 'date', 'hehe')
-        ->callback_add_field('kecamatan_tujuan_pemulangan',function(){
-            $this->load->model('Wilayahmodel');
-            $R = $this->Wilayahmodel->find_all_tujuan(array_keys($this->config->item('provinsi')));
-            $r = '<select name="tujuan">';
-            foreach($R as $v) $r .= '<option value="'.$v['id_wilayah'].'">'.$v['nama_wilayah'].'</option>';
-            return $r.'</select>';
-        })->callback_edit_field('kecamatan_tujuan_pemulangan',function($V,$r){
-            $this->load->model('Wilayahmodel');
-            $R = $this->Wilayahmodel->find_all_tujuan(array_keys($this->config->item('provinsi')));
-            $r = '<select name="tujuan">';
-            
-            foreach($R as $v){
-                $s = $v == $this->get_j['kecamatan_domisili'] ?'selected':''; 
-                $r .= '<option '.$s.' value="'.$v['id_wilayah'].'">'.$v['nama_wilayah'].'</option>';}
-            return $r.'</select>';
-        })
         ->callback_before_insert(array($this,'collect_data'))
         ->callback_before_update(array($this,'collect_data'))
         ->field_type('json_v', 'invisible')
@@ -94,22 +95,18 @@ class Labor extends MY_Controller {
         
         $this->template->write_view("content", 'grocery_crud_content',$D);
         if(isset($this->get_j['tgl_lahir']))
-            $this->template->write("js_bottom_scripts", '<script>$(document).ready(function() {$("#field-tgl_lahir").val("'.date('d/m/Y',strtotime($this->get_j['tgl_lahir'])).'");});</script>',NULL,FALSE);
+            $this->template->write("js_bottom_scripts", '<script>$(document).ready(function() {$("#field-tgl_lahir").val("'.date('d/m/Y',strtotime($this->get_j['tgl_lahir'])).'");
+            $(\'[name="tujuan"]\').val("'.$this->get_j['kecamatan_domisili'].'")
+            });</script>',NULL,FALSE);
         $this->template->render();
 	}
 
     public function val_input($name,$val='',$otherAttr=''){
-        return '<input type="text" name="'.$name.'" '.$otherAttr.' id="field-'.$name.'" value="'.$val.'">';
+        return gc_val_input($name,$val,$otherAttr);//'<input type="text" name="'.$name.'" '.$otherAttr.' id="field-'.$name.'" value="'.$val.'">';
     }
 
     public function val_select($name,$val,$ref){
-        $r ='';
-        foreach($ref as $k=>$i) {
-            $s = $k == $val ? 'selected':'';
-            $r .= '<option value="'.$k.'" '.$s.'>'.$i.'</option>';
-        }
-        // var_dump($r);
-        return '<select name="'.$name.'">'.$r.'</select>';
+        return gc_val_select($name,$val,$ref);
     }
 
     function collect_data($p){
