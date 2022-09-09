@@ -44,16 +44,23 @@ class Labor extends MY_Controller {
             return $this->val_input('tempat_lahir',$this->get_j['tempat_lahir']);
         })->callback_edit_field('jenis_kelamin',function($v,$r){
             return $this->val_select('jenis_kelamin',$this->get_j['jenis_kelamin'],$this->jenisKelamin);
+        })->callback_add_field('jenis_kelamin',function($v,$r){
+            return $this->val_select('jenis_kelamin','',$this->jenisKelamin);
         })->callback_edit_field('status_nikah',function($v,$r){
             return $this->val_select('status_nikah',$this->get_j['status_nikah'],$this->statusNikah);
+        })->callback_add_field('status_nikah',function($v,$r){
+            return $this->val_select('status_nikah','',$this->statusNikah);
         })->callback_edit_field('pendidikan',function($v,$r){
             return $this->val_select('pendidikan',$this->get_j['pendidikan'],$this->pendidikan);
+        })->callback_add_field('pendidikan',function($v,$r){
+            return $this->val_select('pendidikan','',$this->pendidikan);
         })->callback_edit_field('no_telp',function($v,$r){
             return $this->val_input('no_telp',$this->get_j['no_telp']);
         })
         ->callback_edit_field('p3mi',function($v,$r){ return $this->val_input('p3mi',$this->get_j['TK-p3mi']); })
         ->callback_edit_field('jabatan',function($v,$r){ return $this->val_input('jabatan',$this->get_j['TK-jabatan']); })
         ->callback_edit_field('jenis_pekerjaan',function($v,$r){ return $this->val_select('jenis_pekerjaan',$this->get_j['TK-jenis_pekerjaan'],$this->jenisProfesi); })
+        ->callback_add_field('jenis_pekerjaan',function($v,$r){ return $this->val_select('jenis_pekerjaan','',$this->jenisProfesi); })
         ->callback_edit_field('nama_pengguna',function($v,$r){ return $this->val_input('nama_pengguna',$this->get_j['TK-nama_pengguna']); })
         ->callback_edit_field('telp_pengguna',function($v,$r){ return $this->val_input('telp_pengguna',$this->get_j['TK-telp_pengguna']); })
         ->callback_edit_field('gaji',function($v,$r){ return $this->val_input('gaji',$this->get_j['TK-gaji']); })
