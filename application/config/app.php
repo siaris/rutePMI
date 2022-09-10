@@ -57,6 +57,9 @@ $app['pendidikan'] = [
     '2'=>'SD',
     '3'=>'SLTP',
     '4'=>'SMU/SMK',
+    '5'=>'S1',
+    '6'=>'S2',
+    '7'=>'S3'
 ];
 $app['jenis_kelamin'] = [
     'L'=>'Laki-laki',
