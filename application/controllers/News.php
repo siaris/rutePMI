@@ -20,7 +20,7 @@ class News extends MY_Controller {
         $C->set_table('news')
         ->unset_delete()
         ->columns('judul','deskripsi')
-        ->fields('judul','json_v','negara','deskripsi')
+        ->fields('judul','json_v','negara','perwakilan_sumber_referensi','tgl_dokumen','media_berita','pelayanan_kepulangan','deskripsi')
         ->field_type('json_v', 'invisible')
         ->callback_column('judul',function($v,$r){return $v.' &nbsp;&nbsp;&nbsp;<a class="btn btn-small" href="'.BASEURL.'/news_labor/index/'.$r->id.'/">input PMI</a>';})
         ->callback_add_field('negara',function($v,$r){
@@ -28,6 +28,12 @@ class News extends MY_Controller {
         })->callback_edit_field('negara',function($v,$r){
             $this->get_j = $this->get_j($r);
             return gc_val_select('negara',$this->get_j['negara'],$this->listNegara);})
+        ->callback_edit_field('perwakilan_sumber_referensi',function($v,$r){return gc_val_input('perwakilan_sumber_referensi',$this->get_j['perwakilan_sumber_referensi']);})
+        ->callback_edit_field('tgl_dokumen',function($v,$r){return gc_val_input('tgl_dokumen',$this->get_j['tgl_dokumen']);})
+        ->callback_edit_field('media_berita',function($v,$r){return gc_val_input('media_berita',$this->get_j['media_berita']);})
+        ->callback_edit_field('pelayanan_kepulangan',function($v,$r){return gc_val_input('pelayanan_kepulangan',$this->get_j['pelayanan_kepulangan']);})
+        ->display_as('judul','Nomor Berita')    
+        ->display_as('deskripsi','Perihal Kepulangan')    
         ->callback_before_insert(array($this,'collect_data'))
         ->callback_before_update(array($this,'collect_data'))
         ->required_fields('judul','deskripsi');
@@ -39,9 +45,17 @@ class News extends MY_Controller {
 
     function collect_data($p){
         $p['json_v'] = json_encode([
-        'negara'=>$p['negara']
+        'negara'=>$p['negara'],
+        'perwakilan_sumber_referensi'=>$p['perwakilan_sumber_referensi'],
+        'tgl_dokumen'=>$p['tgl_dokumen'],
+        'media_berita'=>$p['media_berita'],
+        'pelayanan_kepulangan'=>$p['pelayanan_kepulangan']
         ]);
         unset($p['negara']);
+        unset($p['perwakilan_sumber_referensi']);
+        unset($p['tgl_dokumen']);
+        unset($p['media_berita']);
+        unset($p['pelayanan_kepulangan']);
         return $p;
     }
 
