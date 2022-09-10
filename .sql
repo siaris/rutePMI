@@ -7926,4 +7926,6 @@ ALTER TABLE `kronologi_perjalanan`
 COMMIT;
 
 
-ALTER TABLE `kronologi_perjalanan` ADD `news_labor_id` VARCHAR(31) NOT NULL AFTER `uuid`, ADD INDEX (`news_labor_id`); 
+ALTER TABLE `kronologi_perjalanan` ADD `news_labor_id` VARCHAR(31) NOT NULL AFTER `uuid`, ADD INDEX (`news_labor_id`);
+
+ALTER TABLE `news` ADD `json_v` LONGTEXT NOT NULL AFTER `deskripsi`; 
