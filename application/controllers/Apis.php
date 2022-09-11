@@ -18,4 +18,13 @@ class Apis extends REST_Controller {
         // $rest = new REST_Controller();
         $this->response($R, REST_Controller::HTTP_OK);
     }
+
+    public function detail_news_get($id){
+        $this->load->model('Newsmodel');
+        $m = $this->Newsmodel;
+        $m->db->join('news_labor','news_id='.$m->table.'.id','left');
+        $m->db->join('labor','labor_id=labor.id','inner');
+        $R = $m->find_all($m->table.'.id = '.$id);
+        $this->response($R, REST_Controller::HTTP_OK);
+    }
 }

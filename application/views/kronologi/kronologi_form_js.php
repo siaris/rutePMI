@@ -10,14 +10,22 @@ var app = new Vue({
                 my_province:'<?= $my_province?>',
                 province_available: ALL_PROVINCE,
                 ket: {},
+                news: [],
+                no_news: '',
+                desc_news:'',
+                list_pmi:'',
                 status: ''
 			}
 		},
     mounted: function(){
 		this.fetchData()
+		this.fetchNews()
         this.readStatus()
 	},
     watch: {
+        
+    },
+    computed:{
         
     },
     methods:{
@@ -35,6 +43,23 @@ var app = new Vue({
             }
             $('#submit').removeClass('disabled')
             return
+        },
+        async fetchNews(){
+            let news = this.pmi.split('.')[0]
+            this.news = await axios.get('<?= BASEURL?>/apis/detail_news/'+news+'/',{ crossdomain: false })
+			.then((resp) => {
+                return resp.data
+            })
+            this.no_news = this.news[0].judul
+            this.desc_news = this.news[0].deskripsi
+            this.list_pmi = this.susunPMI()
+            return
+        },
+        susunPMI(){
+            // return 'yuhuu'
+            let r = []
+            this.news.forEach((x, i) => r.push(x.nama))
+            return r.join(',')
         },
         readStatus(){
             let act = $('#status').val()
