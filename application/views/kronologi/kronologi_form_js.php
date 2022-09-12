@@ -21,6 +21,7 @@ var app = new Vue({
 		this.fetchData()
 		this.fetchNews()
         this.readStatus()
+        this.appendField()
 	},
     watch: {
         
@@ -56,7 +57,6 @@ var app = new Vue({
             return
         },
         susunPMI(){
-            // return 'yuhuu'
             let r = []
             this.news.forEach((x, i) => r.push(x.nama))
             return r.join(',')
@@ -65,9 +65,26 @@ var app = new Vue({
             let act = $('#status').val()
             if(act != 'P'){
                 $('#transit').val(this.my_province)
-                $('#transit').addClass('hide')
-            } else $('#transit').removeClass('hide')
+                $('#div-transit').addClass('hide')
+            } else $('#div-transit').removeClass('hide')
             return
+        },
+        async appendField(){
+            tx = ''
+            for (i of ['no_perjalanan',
+                        'perusahaan_transportasi',
+                        'estimasi_waktu_kedatangan',
+                        'zona_waktu',
+                        'sumber_pembiayaan',
+                        'penerima',
+                        'tanggal_tindak_lanjut',
+                        'pendamping_pemulangan']) tx+= this.addField(i)
+            $('#line-tujuan').after(tx)
+            $('[name="tanggal_tindak_lanjut"]').val('<?= date("Y-m-d H:i:s")?>')
+            return
+        },
+        addField(name){
+            return `<div class="form-group"><label style="text-transform: capitalize;">`+name.replace(/_/g,' ')+`</label><input type="text" name="`+name+`" class="form-control" /></div>`
         }
     }
 })

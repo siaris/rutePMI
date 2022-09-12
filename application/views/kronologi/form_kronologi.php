@@ -16,6 +16,7 @@
     <option v-for="(item, index) of province_available" :value="index">{{item}}</option>
     </select>
 </div>
+<hr id="line-tujuan"/>
 <div class="form-group">
     <label for="exampleInputEmail1">Deskripsi</label>
     <textarea name="desc" class="form-control" ></textarea>

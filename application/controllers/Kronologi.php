@@ -105,7 +105,8 @@ class Kronologi extends MY_Controller {
             $rute = ['f'=>$s['last_status'],'t'=>$s['status'],'d'=>date('Y-m-d H:i')];
             $desc = $s['desc'];
             $loc = $s['loc'];
-            $data['desc'] = json_encode(['rute'=>$rute,'ket'=>$desc,'lokasi'=>$loc]);
+            $j = $this->_collect_for_json($s,$rute,$desc,$loc);
+            $data['desc'] = json_encode($j);
             $data['status_kronologi'] = $s['status'];
             $data['uuid'] = $s['pmi_news'].".".$s['loc'];
             $data['news_labor_id'] = $s['pmi_news'];
@@ -115,5 +116,21 @@ class Kronologi extends MY_Controller {
             redirect(BASEURL.'/news_labor/all_proses/','refresh');
         }
         return;
+    }
+
+    private function _collect_for_json($s,$rute,$desc,$loc){
+        $arr = ['no_perjalanan',
+        'perusahaan_transportasi',
+        'estimasi_waktu_kedatangan',
+        'zona_waktu',
+        'sumber_pembiayaan',
+        'penerima',
+        'tanggal_tindak_lanjut',
+        'pendamping_pemulangan'];
+        $r = ['rute'=>$rute,'ket'=>$desc,'lokasi'=>$loc];
+        foreach($arr as $i){
+            if(isset($s[$i])) $r[$i] = $s[$i];
+        }
+        return $r;
     }
 }
