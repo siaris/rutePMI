@@ -18,7 +18,8 @@ class Laporan extends MY_Controller {
             $m = $this->NewsLabormodel;
             $m->db->join('labor','labor.id=labor_id','inner');
             $m->db->join('news','news.id=news_id','inner');
-            $D['R'] = $m->find_all('status = "E"');
+            
+            $D['R'] = $m->find_all('status = "E"','*,labor.json_v l_json_v');
         // }
         
         $this->template->write_view("content", 'report_pmi_selesai',$D);
