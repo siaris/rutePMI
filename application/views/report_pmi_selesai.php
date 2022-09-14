@@ -41,17 +41,17 @@
 					 </thead>
                      <tbody>
                          <? if(!empty($R)){
-                             foreach($R as $k=>$r){ $JL = json_decode($r['l_json_v'],true);?>
+                             foreach($R as $k=>$r){ $JL = json_decode($r['l_json_v'],true);$JN = json_decode($r['json_v'],true);?>
                              <tr>
                                  <td><?= ($k + 1)?></td>
                                  <td><?= $r['nik']?></td>
+                                 <td><?= $r['nama']?></td>
                                  <td><?= $this->config->item('jenis_kelamin')[$JL['jenis_kelamin']]?></td>
-                                 <td><?= $r['nama']?></td>
-                                 <td><?= $r['nama']?></td>
-                                 <td><?= $r['nama']?></td>
-                                 <td><?= $r['nama']?></td>
-                                 <td><?= $r['nama']?></td>
-                                 <td><?= $r['nama']?></td>
+                                 <td>-</td>
+                                 <td><?= $this->config->item('statusDesc')[$r['status']]?></td>
+                                 <td>-</td>
+                                 <td>-</td>
+                                 <td>-</td>
                              </tr>
                              <?}}?>    
                     </tbody>    
