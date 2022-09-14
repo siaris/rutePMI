@@ -55,8 +55,12 @@
                              </tr>
                              <?}}?>    
                     </tbody>    
-        </table>
             </table>
+            </table>
+            <div class="col-xs-8">
+            <label class="col-sm-3 control-label"></label>
+                <input class="btn btn-primary" name="print" value="Print" type="button" style="margin-bottom:10px; margin-left:155px;">
+            </div>
         </div>
     </div>
 </div>
