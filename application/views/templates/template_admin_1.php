@@ -90,6 +90,11 @@
             <i class="fa fa-map-marker"></i> <span>Set Lokasi (Simulasi)</span>
           </a>
         </li>
+		<li>
+          <a href="<?= BASEURL?>/laporan/pmi_selesai/">
+            <i class="fa fa-file-text"></i> <span>Laporan PMI Selesai Dipulangkan</span>
+          </a>
+        </li>
 		</ul>
 		</aside>
 		
