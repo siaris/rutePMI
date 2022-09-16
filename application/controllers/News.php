@@ -19,10 +19,11 @@ class News extends MY_Controller {
         $C = new Grocery_CRUD_extended();
         $C->set_table('news')
         ->unset_delete()
+        ->unset_read()
         ->columns('judul','deskripsi')
         ->fields('judul','json_v','negara','perwakilan_sumber_referensi','tgl_dokumen','media_berita','pelayanan_kepulangan','deskripsi')
         ->field_type('json_v', 'invisible')
-        ->callback_column('judul',function($v,$r){return $v.' &nbsp;&nbsp;&nbsp;<a class="btn btn-small" href="'.BASEURL.'/news_labor/index/'.$r->id.'/">input PMI</a>';})
+        ->callback_column('judul',function($v,$r){return $v.' &nbsp;&nbsp;&nbsp;<a class="btn btn-small" href="'.BASEURL.'/news_labor/index/'.$r->id.'/">input PMI</a> &nbsp;&nbsp;&nbsp;<a class="btn btn-small" href="'.BASEURL.'/news/detail/'.$r->id.'/">Detail Berita</a>';})
         ->callback_add_field('negara',function($v,$r){
             return gc_val_select('negara','',$this->listNegara);
         })->callback_edit_field('negara',function($v,$r){
@@ -42,6 +43,13 @@ class News extends MY_Controller {
         $this->template->write_view("content", 'grocery_crud_content',$D);
         $this->template->render();
 	}
+
+    public function detail($id){
+        $this->prep_bootstrap();
+        $D['news'] = $this->Newsmodel->find('id = '.$id);
+        $this->template->write_view("content", 'news/detail',$D);
+        $this->template->render();
+    }
 
     function collect_data($p){
         $p['json_v'] = json_encode([
