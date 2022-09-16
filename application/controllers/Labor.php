@@ -25,6 +25,7 @@ class Labor extends MY_Controller {
         $this->get_j = [];
         $C->set_table('labor')
         ->unset_delete()
+        ->unset_read()
         ->columns('nik','nama')
         ->fields('nik','nama','json_v','alamat_domisili','kecamatan_tujuan_pemulangan','tgl_lahir','tempat_lahir','jenis_kelamin','agama','status_nikah','pendidikan','no_telp',
         'p3mi','negara', 'jabatan', 'jenis_pekerjaan', 'nama_pengguna', 'telp_pengguna', 'gaji', 'perkiraan_tgl_mulai_kerja', 'asuransi', 'nomor_asuransi')
@@ -32,6 +33,9 @@ class Labor extends MY_Controller {
         ->callback_edit_field('alamat_domisili',function($v,$r){
             $this->get_j = $this->get_j($r);
             return isset($this->get_j['alamat_domisili'])?'<textarea name="alamat_domisili">'.$this->get_j['alamat_domisili'].'</textarea>':'<textarea name="alamat_domisili"></textarea>';
+        })
+        ->callback_column('nik',function($v,$r){
+            return '<a href="'.BASEURL.'/labor/detail/'.$r->id.'">'.$v.'</a>';
         })
         ->callback_add_field('alamat_domisili',function(){
             return '<textarea name="alamat_domisili"></textarea>';
@@ -100,6 +104,13 @@ class Labor extends MY_Controller {
             });</script>',NULL,FALSE);
         $this->template->render();
 	}
+
+    public function detail($id){
+        $this->prep_bootstrap();
+        $D['d'] = $this->Labormodel->find('id = '.$id);
+        $this->template->write_view("content", 'labor/profile',$D);
+        $this->template->render();
+    }
 
     public function val_input($name,$val='',$otherAttr=''){
         return gc_val_input($name,$val,$otherAttr);//'<input type="text" name="'.$name.'" '.$otherAttr.' id="field-'.$name.'" value="'.$val.'">';
