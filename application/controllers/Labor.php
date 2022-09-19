@@ -108,6 +108,14 @@ class Labor extends MY_Controller {
     public function detail($id){
         $this->prep_bootstrap();
         $D['d'] = $this->Labormodel->find('id = '.$id);
+        // $D['config'] = $this->config;
+        $this->load->model('Wilayahmodel');
+        $R = $this->Wilayahmodel->find_all_tujuan(array_keys($this->config->item('provinsi')));
+
+        foreach($this->config as $k=>$v) $D[$k] = $v;
+        $D['config']['kecamatan_domisili'] = []; 
+        foreach($R as $v) $D['config']['kecamatan_domisili'][$v['id_wilayah']] = $v['nama_wilayah']; 
+         
         $this->template->write_view("content", 'labor/profile',$D);
         $this->template->render();
     }

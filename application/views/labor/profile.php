@@ -1,4 +1,17 @@
-<?
+<? //var_dump($config);
+$GLOBALS['C'] = $config;
+function write_val($key,$j,$deep=FALSE){
+    $config = $GLOBALS['C'];
+    if($deep){
+        switch($key){
+            case 'TK-jenis_pekerjaan' : $key = 'jenis_profesi'; break;
+            case 'TK-negara' : $key = 'negara'; break;
+            default : return $j; break;
+        }
+    }
+    return isset($config[$key][$j])?$config[$key][$j]:write_val($key,$j,TRUE); 
+}
+
 $J = json_decode($d['json_v'],true)?>
 <section class="content" id="app">
     <div>
@@ -18,7 +31,7 @@ $J = json_decode($d['json_v'],true)?>
                 <table class="table table-hover">
                     <tr> <th>NIK</th> <th><?= $d['nik']?></th> </tr>
                     <?foreach($J as $key=>$j){
-                        ?><tr> <th><?= $key?></th> <th><?= $j?></th> </tr><?
+                        ?><tr> <th><?= ucwords(str_replace(['-','_'],' ',$key))?></th> <th><?= write_val($key,$j)?></th> </tr><?
                     }?>
                 </table>
     </div>
