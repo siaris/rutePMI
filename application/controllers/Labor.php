@@ -102,11 +102,13 @@ class Labor extends MY_Controller {
             $this->template->write("js_bottom_scripts", '<script>$(document).ready(function() {$("#field-tgl_lahir").val("'.date('d/m/Y',strtotime($this->get_j['tgl_lahir'])).'");
             $("#field-perkiraan_tgl_mulai_kerja").val("'.date('d/m/Y',strtotime($this->get_j['TK-perkiraan_tgl_mulai_kerja'])).'");
             $(\'[name="tujuan"]\').val("'.$this->get_j['kecamatan_domisili'].'");
-            $("form select[name=\'tujuan\']").select2()
             });</script>',NULL,FALSE);
         $this->template->write('css', '<link rel="stylesheet" href="'.BASEURL.'/components/select2/dist/css/select2.min.css">'
             , FALSE);
         $this->template->write('js', '<script src="'.BASEURL.'/components/select2/dist/js/select2.min.js"></script>', FALSE);
+        $this->template->write("js_bottom_scripts", '<script>$(document).ready(function() {
+            $("form select[name=\'tujuan\']").select2()
+            });</script>',NULL,FALSE);
         $this->template->render();
 	}
 
