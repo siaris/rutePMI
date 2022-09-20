@@ -130,7 +130,7 @@ class Labor extends MY_Controller {
 
     function collect_data($p){
         $p['json_v'] = json_encode(['alamat_domisili'=>$p['alamat_domisili'],'kecamatan_domisili'=>$p['tujuan'],
-        'tgl_lahir'=>date('Y-m-d',strtotime($p['tgl_lahir'])),
+        'tgl_lahir'=>date('Y-m-d',strtotime(str_replace('/', '-', $p['tgl_lahir']))),
         'tempat_lahir'=>$p['tempat_lahir'],
         'jenis_kelamin'=>$p['jenis_kelamin'],
         'status_nikah'=>$p['status_nikah'],
