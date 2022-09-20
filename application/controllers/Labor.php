@@ -39,7 +39,8 @@ class Labor extends MY_Controller {
         })
         ->callback_add_field('alamat_domisili',function(){
             return '<textarea name="alamat_domisili"></textarea>';
-        })->field_type('tgl_lahir', 'date', 'hehe')
+        })->field_type('tgl_lahir', 'date', '')
+        ->field_type('perkiraan_tgl_mulai_kerja', 'date', '')
         ->callback_add_field('kecamatan_tujuan_pemulangan',function(){
             $this->load->model('Wilayahmodel');
             $R = $this->Wilayahmodel->find_all_tujuan(array_keys($this->config->item('provinsi')));
@@ -88,7 +89,6 @@ class Labor extends MY_Controller {
         ->callback_edit_field('nama_pengguna',function($v,$r){ return $this->val_input('nama_pengguna',$this->get_j['TK-nama_pengguna']); })
         ->callback_edit_field('telp_pengguna',function($v,$r){ return $this->val_input('telp_pengguna',$this->get_j['TK-telp_pengguna']); })
         ->callback_edit_field('gaji',function($v,$r){ return $this->val_input('gaji',$this->get_j['TK-gaji']); })
-        ->callback_edit_field('perkiraan_tgl_mulai_kerja',function($v,$r){ return $this->val_input('perkiraan_tgl_mulai_kerja',$this->get_j['TK-perkiraan_tgl_mulai_kerja']); })
         ->callback_edit_field('asuransi',function($v,$r){ return $this->val_input('asuransi',$this->get_j['TK-asuransi']); })
         ->callback_edit_field('nomor_asuransi',function($v,$r){ return $this->val_input('nomor_asuransi',$this->get_j['TK-nomor_asuransi']); })
         ->callback_before_insert(array($this,'collect_data'))
@@ -100,8 +100,13 @@ class Labor extends MY_Controller {
         $this->template->write_view("content", 'grocery_crud_content',$D);
         if(isset($this->get_j['tgl_lahir']))
             $this->template->write("js_bottom_scripts", '<script>$(document).ready(function() {$("#field-tgl_lahir").val("'.date('d/m/Y',strtotime($this->get_j['tgl_lahir'])).'");
-            $(\'[name="tujuan"]\').val("'.$this->get_j['kecamatan_domisili'].'")
+            $("#field-perkiraan_tgl_mulai_kerja").val("'.date('d/m/Y',strtotime($this->get_j['TK-perkiraan_tgl_mulai_kerja'])).'");
+            $(\'[name="tujuan"]\').val("'.$this->get_j['kecamatan_domisili'].'");
+            $("form select[name=\'tujuan\']").select2()
             });</script>',NULL,FALSE);
+        $this->template->write('css', '<link rel="stylesheet" href="'.BASEURL.'/components/select2/dist/css/select2.min.css">'
+            , FALSE);
+        $this->template->write('js', '<script src="'.BASEURL.'/components/select2/dist/js/select2.min.js"></script>', FALSE);
         $this->template->render();
 	}
 
@@ -144,7 +149,7 @@ class Labor extends MY_Controller {
         'TK-nama_pengguna'=>$p['nama_pengguna'], 
         'TK-telp_pengguna'=>$p['telp_pengguna'], 
         'TK-gaji'=>$p['gaji'], 
-        'TK-perkiraan_tgl_mulai_kerja'=>$p['perkiraan_tgl_mulai_kerja'], 
+        'TK-perkiraan_tgl_mulai_kerja'=>date('Y-m-d',strtotime(str_replace('/', '-', $p['perkiraan_tgl_mulai_kerja']))), 
         'TK-asuransi'=>$p['asuransi'], 
         'TK-nomor_asuransi'=>$p['nomor_asuransi']
         ]);
