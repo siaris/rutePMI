@@ -65,6 +65,22 @@ $app['jenis_kelamin'] = [
     'L'=>'Laki-laki',
     'P'=>'Perempuan'
 ];
+$app['media_berita'] = [
+    '1'=>'Brafaks',
+    '2'=>'Surat',
+    '3'=>'Whatsapp',
+    '4'=>'Perintah',
+    '5'=>'SISKOP2MI',
+    '6'=>'Lain Lain',
+];
+$app['pelayanan_kepulangan'] = [
+    '1'=>'CPMI',
+    '2'=>'Jenazah',
+    '3'=>'Sakit',
+    '4'=>'PMIB',
+    '5'=>'Keluarga',
+    '6'=>'Bervariasi',
+];
 
 
 $config = $app;

@@ -9,6 +9,8 @@ class News extends MY_Controller {
 	    $this->template->set_template("template_admin_panel");
         $this->load->helper('app');
         $this->listNegara = $this->config->item('negara');
+        $this->berita = $this->config->item('media_berita');
+        $this->layananPulang = $this->config->item('pelayanan_kepulangan');
         $this->load->model('Newsmodel');
     }
 	
@@ -30,9 +32,12 @@ class News extends MY_Controller {
             $this->get_j = $this->get_j($r);
             return gc_val_select('negara',$this->get_j['negara'],$this->listNegara);})
         ->callback_edit_field('perwakilan_sumber_referensi',function($v,$r){return gc_val_input('perwakilan_sumber_referensi',$this->get_j['perwakilan_sumber_referensi']);})
-        ->callback_edit_field('tgl_dokumen',function($v,$r){return gc_val_input('tgl_dokumen',$this->get_j['tgl_dokumen']);})
-        ->callback_edit_field('media_berita',function($v,$r){return gc_val_input('media_berita',$this->get_j['media_berita']);})
-        ->callback_edit_field('pelayanan_kepulangan',function($v,$r){return gc_val_input('pelayanan_kepulangan',$this->get_j['pelayanan_kepulangan']);})
+        // ->callback_edit_field('tgl_dokumen',function($v,$r){return gc_val_input('tgl_dokumen',$this->get_j['tgl_dokumen']);})
+        ->field_type('tgl_dokumen', 'date', '')
+        ->callback_edit_field('media_berita',function($v,$r){return gc_val_select('media_berita',$this->get_j['media_berita'],$this->berita);})
+        ->callback_add_field('media_berita',function($v,$r){return gc_val_select('media_berita','',$this->berita);})
+        ->callback_edit_field('pelayanan_kepulangan',function($v,$r){return gc_val_select('pelayanan_kepulangan',$this->get_j['pelayanan_kepulangan'],$this->layananPulang);})
+        ->callback_add_field('pelayanan_kepulangan',function($v,$r){return gc_val_select('pelayanan_kepulangan','',$this->layananPulang);})
         ->display_as('judul','Nomor Berita')    
         ->display_as('deskripsi','Perihal Kepulangan')    
         ->callback_before_insert(array($this,'collect_data'))
@@ -41,6 +46,9 @@ class News extends MY_Controller {
         $D = $C->render(); 
         
         $this->template->write_view("content", 'grocery_crud_content',$D);
+        if(isset($this->get_j['tgl_dokumen']))
+            $this->template->write("js_bottom_scripts", '<script>$(document).ready(function() {$("#field-tgl_dokumen").val("'.date('d/m/Y',strtotime($this->get_j['tgl_dokumen'])).'");
+            });</script>',NULL,FALSE);
         $this->template->render();
 	}
 
@@ -55,7 +63,7 @@ class News extends MY_Controller {
         $p['json_v'] = json_encode([
         'negara'=>$p['negara'],
         'perwakilan_sumber_referensi'=>$p['perwakilan_sumber_referensi'],
-        'tgl_dokumen'=>$p['tgl_dokumen'],
+        'tgl_dokumen'=>date('Y-m-d',strtotime(str_replace('/', '-', $p['tgl_dokumen']))),
         'media_berita'=>$p['media_berita'],
         'pelayanan_kepulangan'=>$p['pelayanan_kepulangan']
         ]);

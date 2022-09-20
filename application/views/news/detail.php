@@ -20,10 +20,10 @@
                     <tr> <th>Nomor Berita</th> <th><?= $news['judul']?></th> </tr>
                     <tr> <th>Negara Penempatan</th> <th><?= config_item('negara')[$J['negara']]?></th> </tr>
                     <tr> <th>Sumber Berita</th> <th><?= 'BP2MI'?></th> </tr>
-                    <tr> <th>Media Berita</th> <th><?= $J['media_berita']?></th> </tr>
+                    <tr> <th>Media Berita</th> <th><?= config_item('media_berita')[$J['media_berita']]?></th> </tr>
                     <tr> <th>Jenis Berita</th> <th><?= 'Berita Kepulangan'?></th> </tr>
                     <tr> <th>Perwakilan RI</th> <th><?= $J['perwakilan_sumber_referensi']?></th> </tr>
-                    <tr> <th>Jenis Kepulangan</th> <th><?= 'Campuran (Bervariasi)'?></th> </tr>
+                    <tr> <th>Jenis Kepulangan</th> <th><?= config_item('pelayanan_kepulangan')[$J['pelayanan_kepulangan']]?></th> </tr>
                     <tr> <th>Tanggal Dokumen</th> <th><?= $J['tgl_dokumen']?></th> </tr>
                     <tr> <th>Tanggal Input</th> <th><?= date($news['created_at'])?></th> </tr>
                     <tr> <th>Input Oleh</th> <th><?= 'User'?></th> </tr>
