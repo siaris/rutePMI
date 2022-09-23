@@ -23,7 +23,8 @@
         </form>
         */?>
 
-        <div id="toPrint" style="overflow-y:auto;">
+        <div style="overflow-y:auto;">
+        <div id="toPrint">
 			<table id="tblExport" width="100%"><tr><td>
             <table class="table table-bordered table-condensed print" style="font-size:12px;" >
             <thead><tr>
@@ -57,6 +58,7 @@
                     </tbody>    
             </table>
             </table>
+            </div>
             <div class="col-xs-8">
             <label class="col-sm-3 control-label"></label>
                 <input class="btn btn-primary" name="print" value="Print" type="button" style="margin-bottom:10px; margin-left:155px;">
