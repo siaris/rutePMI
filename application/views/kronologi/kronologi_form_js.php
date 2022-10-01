@@ -20,7 +20,7 @@ var app = new Vue({
     mounted: function(){
 		this.fetchData()
 		this.fetchNews()
-        this.readStatus()
+        this.newReadStatus('new')
         this.appendField()
 	},
     watch: {
@@ -69,6 +69,37 @@ var app = new Vue({
             } else $('#div-transit').removeClass('hide')
             return
         },
+        newReadStatus(state){
+            if(state == 'new') return
+            let act = $('#status').val()
+            switch(act){
+                case 'P': $('#div-transit').removeClass('hide')
+                this.changeSomeField('show')
+                break
+                default: $('#transit').val(this.my_province)
+                $('#div-transit').addClass('hide')
+                this.changeSomeField('hide')
+                break
+            }
+            return
+        },
+        changeSomeField(toggle){
+            let arr = ['no_perjalanan',
+                        'perusahaan_transportasi',
+                        'estimasi_waktu_kedatangan',
+                        'zona_waktu',
+                        'sumber_pembiayaan']
+            for (i of arr){
+                if(toggle == 'hide'){
+                    $('.for-field-'+i).addClass('hide')
+                    $('[name="'+i+'"]').val('-')
+                }else{
+                    $('.for-field-'+i).removeClass('hide')
+                    $('[name="'+i+'"]').val('')
+                }
+            }
+            return
+        },
         async appendField(){
             tx = ''
             for (i of ['no_perjalanan',
@@ -84,7 +115,7 @@ var app = new Vue({
             return
         },
         addField(name){
-            return `<div class="form-group"><label style="text-transform: capitalize;">`+name.replace(/_/g,' ')+`</label><input type="text" name="`+name+`" class="form-control" /></div>`
+            return `<div class="form-group for-field-`+name+`"><label style="text-transform: capitalize;">`+name.replace(/_/g,' ')+`</label><input type="text" name="`+name+`" class="form-control" /></div>`
         }
     }
 })
