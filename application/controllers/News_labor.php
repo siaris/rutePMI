@@ -70,9 +70,9 @@ class News_labor extends MY_Controller {
         ->callback_column('status',function($v,$r){
             return $this->config->item('statusDesc')[$v];
         })
-        ->callback_column('kronologi_ringkas',function($v,$r){
+        ->callback_column('kronologi_ringkas',function($v,$R){
             $this->load->model('Kronologimodel');
-            $Rr = $this->Kronologimodel->find_all('uuid like "'.$r->uuid.'.%"','`desc`','id');
+            $Rr = $this->Kronologimodel->find_all('uuid like "'.$R->uuid.'.%"','`desc`','id');
             $r = [];
             if(!empty($Rr))
                 array_walk($Rr,function($v) use (&$r){
@@ -80,7 +80,7 @@ class News_labor extends MY_Controller {
                     $r[] = $d['rute']['d'].' : '.$this->config->item('statusDesc')[$d['rute']['f']].' ---> '.$this->config->item('statusDesc')[$d['rute']['t']];
                 });
 
-            return implode('<br>',$r);
+            return '<a href="'.BASEURL.'/kronologi/timeline/'.$R->uuid.'">lihat detail</a><br>'.implode('<br>',$r);
         })
         ->display_as('news_id','berita kepulangan')
         ->display_as('labor_id','PMI')

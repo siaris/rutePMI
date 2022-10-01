@@ -133,4 +133,13 @@ class Kronologi extends MY_Controller {
         }
         return $r;
     }
+
+    public function timeline($id){
+        $this->prep_bootstrap();
+        $this->load->model(['Kronologimodel','NewsLabormodel']);
+        $D['d'] = $this->Kronologimodel->find_all('news_labor_id = "'.$id.'"',NULL,'created_at desc');
+        $D['d0'] = $this->NewsLabormodel->find('uuid = "'.$id.'"');
+        $this->template->write_view("content", 'kronologi/timeline',$D);
+        $this->template->render();
+    }
 }
