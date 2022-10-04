@@ -22,7 +22,7 @@ class MY_Controller extends CI_Controller {
         return false;
     }
 
-    public function not_remap($action, $args=null) {
+    public function _remap($action, $args=null) {
         $methods = $this->get_public_method($this);
         if (method_exists($this, $action)) { 
             if ($this->isAuth($action) || $this->get('isAdmin') ||($this->get('isLogin') && $this->checkAllowAction($action))) $this->call_func_array(array($this, $action), $args);

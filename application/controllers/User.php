@@ -26,7 +26,7 @@ class User extends MY_Controller {
             $u = $this->input->post('username');
 			$p = $this->input->post('password');
             $usemd5 = $u == 'adm1'?true:false;
-			$this->auth->login($u, $p, $usemd5);
+			$this->auth->login($u, $p);
         }
         return;
     }
