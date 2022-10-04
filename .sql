@@ -7928,4 +7928,117 @@ COMMIT;
 
 ALTER TABLE `kronologi_perjalanan` ADD `news_labor_id` VARCHAR(31) NOT NULL AFTER `uuid`, ADD INDEX (`news_labor_id`);
 
-ALTER TABLE `news` ADD `json_v` LONGTEXT NOT NULL AFTER `deskripsi`; 
+ALTER TABLE `news` ADD `json_v` LONGTEXT NOT NULL AFTER `deskripsi`;
+
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(30) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `group` int(1) DEFAULT 0,
+  `status` varchar(1) DEFAULT '1',
+  `nik` int(11) DEFAULT NULL,
+  `map_user_function` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `NewIndex1` (`username`),
+  ADD KEY `nik` (`nik`),
+  ADD KEY `id` (`id`),
+  ADD KEY `group` (`group`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+CREATE TABLE `group` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `default_link` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `group`
+--
+
+INSERT INTO `group` (`id`, `name`, `description`, `default_link`) VALUES
+(1, 'ADMIN', NULL, '');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `group`
+--
+ALTER TABLE `group`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `group`
+--
+ALTER TABLE `group`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+CREATE TABLE `user_group` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `user_group`
+--
+ALTER TABLE `user_group`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `group_id` (`group_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `user_group`
+--
+ALTER TABLE `user_group`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Dumping data for table `user_group`
+--
+
+INSERT INTO `user_group` (`user_id`, `group_id`) VALUES
+(1, 1);
+
+
+INSERT INTO `user` (`username`, `password`, `name`, `email`, `group`, `status`, `nik`, `map_user_function`) VALUES
+('s_admin', '8cf82b021e4088547123ca89a0bcb76e', NULL, NULL, 1, '1', NULL, '');
