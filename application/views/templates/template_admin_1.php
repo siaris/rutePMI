@@ -55,13 +55,7 @@
 		<!-- Left side column. contains the logo and sidebar -->
 		<aside class="main-sidebar" style="min-height: 0%;"><?=$leftpanel?>
 		<div class="sidebar-form">
-		<div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search..." autocomplete="off">
-          <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
+		
 		</div>
 		<ul class="sidebar-menu" data-widget="tree">
 		<li>
