@@ -118,7 +118,7 @@ class Kronologi extends MY_Controller {
 				$config['allowed_types'] = 'jpeg|jpg|png|gif|pdf';
 				$config['encrypt_name']	 = true;
 				$this->load->library('upload',$config);
-				var_dump($this->upload->do_upload('berkas'),ROOTPATH.$this->defPath);
+				// var_dump($this->upload->do_upload('berkas'),ROOTPATH.$this->defPath);
 				if($this->upload->do_upload('berkas')){
 					$d = $this->upload->data();
 					$j['berkas'] = [$this->defPath.$d['file_name']];
@@ -126,7 +126,7 @@ class Kronologi extends MY_Controller {
 			}
             $data['desc'] = json_encode($j);
             
-            die;
+            // die;
 
             $this->Kronologimodel->save($data);
             
