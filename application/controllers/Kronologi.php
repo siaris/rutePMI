@@ -106,10 +106,27 @@ class Kronologi extends MY_Controller {
             $desc = $s['desc'];
             $loc = $s['loc'];
             $j = $this->_collect_for_json($s,$rute,$desc,$loc);
-            $data['desc'] = json_encode($j);
+            
             $data['status_kronologi'] = $s['status'];
             $data['uuid'] = $s['pmi_news'].".".$s['loc'];
             $data['news_labor_id'] = $s['pmi_news'];
+
+            $this->defPath = '/rute/public/support/img/';
+
+            if(isset($_FILES['berkas'])){
+				$config['upload_path']   = ROOTPATH.$this->defPath;
+				$config['allowed_types'] = 'jpeg|jpg|png|gif|pdf';
+				$config['encrypt_name']	 = true;
+				$this->load->library('upload',$config);
+				var_dump($this->upload->do_upload('berkas'),ROOTPATH.$this->defPath);
+				if($this->upload->do_upload('berkas')){
+					$d = $this->upload->data();
+					$j['berkas'] = [$this->defPath.$d['file_name']];
+				}
+			}
+            $data['desc'] = json_encode($j);
+            
+            die;
 
             $this->Kronologimodel->save($data);
             

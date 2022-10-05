@@ -11,7 +11,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            
               <div class="box-body">
               <? include 'form_kronologi.php'?>
                 <input type="hidden" name="platform" value="">
@@ -25,7 +25,7 @@
               <div class="box-footer">
                 <button id="submit" type="submit" class="btn btn-primary">Submit</button>
               </div>
-            </form>
+            
           </div>
           <!-- /.box -->
 
