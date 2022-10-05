@@ -111,7 +111,7 @@ class Kronologi extends MY_Controller {
             $data['uuid'] = $s['pmi_news'].".".$s['loc'];
             $data['news_labor_id'] = $s['pmi_news'];
 
-            $this->defPath = '/rute/public/support/img/';
+            $this->defPath = '/public/support/img/';
 
             if(isset($_FILES['berkas'])){
 				$config['upload_path']   = ROOTPATH.$this->defPath;
@@ -122,7 +122,7 @@ class Kronologi extends MY_Controller {
 				if($this->upload->do_upload('berkas')){
 					$d = $this->upload->data();
 					$j['berkas'] = [$this->defPath.$d['file_name']];
-				}
+				}else echo $this->upload->display_errors();
 			}
             $data['desc'] = json_encode($j);
             
