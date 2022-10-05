@@ -46,7 +46,7 @@
                              <tr>
                                  <td><?= ($k + 1)?></td>
                                  <td><?= $r['nik']?></td>
-                                 <td><?= $r['nama']?></td>
+                                 <td><a href="<?= BASEURL."/kronologi/timeline/".$r['uuid']?>"><?= $r['nama']?></a></td>
                                  <td><?= $this->config->item('jenis_kelamin')[$JL['jenis_kelamin']]?></td>
                                  <td>-</td>
                                  <td><?= $this->config->item('statusDesc')[$r['status']]?></td>

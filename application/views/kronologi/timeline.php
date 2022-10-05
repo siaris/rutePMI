@@ -22,7 +22,7 @@
             <h3 class="timeline-header"><a href="#"><?= $this->config->item('statusDesc')[$v['status_kronologi']]?></a></h3>
 
             <div class="timeline-body">
-                <?array_walk($R,function($v,$k){echo $k.' : '.$v.'<br>';});?>
+                <?array_walk($R,function($v,$k){echo (!is_array($v))?$k.' : '.$v.'<br>':about($v,$k);});?>
             </div>
 
             <div class="timeline-footer"></div>
@@ -56,3 +56,15 @@
 </div>
 </div>
 </section>
+<?
+function about($v,$k){
+    $return = '';
+    switch($k){
+        default:
+            $return .= 'berkas:'; 
+            foreach($v as $i) $return .= '<a href="'.BASEURL.$i.'">lihat berkas</a><br>';
+        break;
+    }
+    return $return;
+}
+?>
