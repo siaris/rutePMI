@@ -8042,3 +8042,40 @@ INSERT INTO `user_group` (`user_id`, `group_id`) VALUES
 
 INSERT INTO `user` (`username`, `password`, `name`, `email`, `group`, `status`, `nik`, `map_user_function`) VALUES
 ('s_admin', '8cf82b021e4088547123ca89a0bcb76e', NULL, NULL, 1, '1', NULL, '');
+
+
+CREATE TABLE `module` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `controller` varchar(100) DEFAULT NULL,
+  `action` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `module`
+--
+
+INSERT INTO `module` (`id`, `name`, `description`, `controller`, `action`) VALUES
+(1, 'MASTER PMI', 'labor', 'labor', 'index,detail'),
+(2, 'BERITA KEPULANGAN', 'news', 'news', 'index,detail');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `module`
+--
+ALTER TABLE `module`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `module`
+--
+ALTER TABLE `module`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
