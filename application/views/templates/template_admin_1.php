@@ -39,7 +39,7 @@
 		  <ul class="nav navbar-nav">
 		  <li class="dropdown user user-menu">
 		  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="hidden-xs">USER</span>
+              <span class="hidden-xs"><?= $this->session->userLogin['name'] ?></span>
             </a>	
 		</li>
 		<li>
@@ -88,6 +88,31 @@
           <a href="<?= BASEURL?>/laporan/pmi_selesai/">
             <i class="fa fa-file-text"></i> <span>Laporan PMI Selesai Dipulangkan</span>
           </a>
+        </li>
+		<li class="treeview">
+          <a href="#">
+            <i class="fa fa-gear"></i> <span>Config</span>
+			<span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+		  <ul class="treeview-menu">
+		  	  <li>
+				  <a href="<?= BASEURL?>/config/list_user/">
+					  User
+				  </a>
+			  </li><?/*
+		  	  <li>
+				  <a href="<?= BASEURL?>/config/modules/">
+					  Modul
+				  </a>
+			  </li>
+			  <li>
+				  <a href="<?= BASEURL?>/config/groups/">
+					  Group
+				  </a>
+			  </li>*/?>		  
+		  </ul>
         </li>
 		</ul>
 		</aside>
