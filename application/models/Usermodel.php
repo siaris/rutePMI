@@ -24,9 +24,10 @@ class Usermodel extends MY_Model {
       $this->db->join('group', 'group.id=user_group.group_id');
       $this->db->group_by('user.id');
       $this->db->where(['username'=>$user, 'password'=>$pass_to_compare, 'status'=>1]);
-      
-      if ($this->db->count_all_results($this->tableName) > 0) {
-         return $this->db->get($this->tableName)->result_object();
+      $result = $this->db->get($this->tableName)->result_object();
+      // var_dump(count($result),$this->db->last_query());die;
+      if (count($result) > 0) {
+         return $result;
       } else {
          return false;
       }
