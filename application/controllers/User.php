@@ -17,7 +17,7 @@ class User extends MY_Controller {
         if($this->input->post()){
             $this->login_as();
         }
-        $this->prep_bootstrap();
+        $this->prep_bootstrap(FALSE);
         $this->template->render();
 	}
 
