@@ -63,6 +63,7 @@ $template['template_admin_panel']['regions'] = [
     'start_header',
     'pagetop',
     'leftpanel',
+    'left_menu',
     'content',
     'footer',
     'css',

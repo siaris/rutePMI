@@ -68,7 +68,7 @@ class MY_Controller extends CI_Controller {
         else call_user_func($callback);
     }
 
-	protected function prep_bootstrap(){
+	protected function prep_bootstrap($isLogin=TRUE){
         $this->template->write('css', '
             <link rel="stylesheet" href="'.BASEURL.'/components/bootstrap/dist/css/bootstrap.min.css">
             <link rel="stylesheet" href="'.BASEURL.'/assets/css/AdminLTE.min.css">
@@ -80,7 +80,58 @@ class MY_Controller extends CI_Controller {
         $this->template->write('js', '
                 <script src="'.BASEURL.'/assets/js/adminlte.min.js"></script>
                 <script src="'.BASEURL.'/components/bootstrap/dist/js/bootstrap.min.js"></script><script src="'.BASEURL.'/components/bootstrap/dist/js/bootstrap-typeahead.js"></script>', FALSE);
+        if($isLogin) $this->template->write('left_menu',$this->draw_menu($this->build_menu_by_group()));
 		return;
+    }
+
+    private function draw_menu($M){
+        $t = '';
+        foreach($M as $k=>$m){
+            $childNode = isset($m['child'])?'<ul class="treeview-menu">'.$this->draw_menu($m['child']).'</ul>':'';
+            $arrowChild = isset($m['child'])?'<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>':'';
+            $t .= '<li class="'.(isset($m['child'])?'treeview':'').'">
+            <a href="'.$m['url'].'">
+              <i class="'.$m['icon'].'"></i> <span>'.$k.'</span>'.$arrowChild.'
+            </a>'.$childNode.'
+          </li>';
+        }
+        return $t;
+    }
+
+    private function build_menu_by_group(){
+        $menu = ['pmi'=>[
+            'icon'=>'fa fa-child',
+            'url'=>BASEURL.'/labor'
+            ],
+            'news'=>['icon'=>'fa fa-bookmark',
+            'url'=>BASEURL.'/news'],
+            'pmi dalam proses'=>['icon'=>'fa fa-paper-plane',
+            'url'=>BASEURL.'/news_labor/all_proses'],
+            'set lokasi'=>['icon'=>'fa fa-map-marker',
+            'url'=>BASEURL.'/lokasi/set_my'],
+            'pmi selesai proses'=>['icon'=>'fa fa-file-text',
+            'url'=>BASEURL.'/laporan/pmi_selesai'],
+            'config'=>['child'=>[
+                'user'=>[
+                    'icon'=>'fa fa-gear',
+                    'url'=>BASEURL.'/config/list_user'
+                ]],'icon'=>'fa fa-gear',
+                'url'=>'#']
+            ];
+        switch($this->session->userdata['userLogin']['group']){
+            case '2':
+                unset($menu['pmi dalam proses']);
+                unset($menu['config']);
+                unset($menu['set lokasi']);
+                break;
+            case '3':
+                unset($menu['pmi']);
+                unset($menu['news']);
+                unset($menu['config']);
+                break;
+            default: break;
+        }
+        return $menu;
     }
 
 }
