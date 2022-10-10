@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Usermodel extends MY_Model {
-   protected $tableName = 'user';
+   public $table = 'user';
    protected $resultMode = 'object';
    protected $noJoin = false;
    
@@ -20,11 +20,11 @@ class Usermodel extends MY_Model {
          "GROUP_CONCAT(group.name SEPARATOR ',') as group_name"];      
 	   $strFields = implode(', ', $fields);
       $this->db->select($strFields, false);
-      $this->db->join('user_group', 'user_group.user_id=user.id');
-      $this->db->join('group', 'group.id=user_group.group_id');
+      // $this->db->join('user_group', 'user_group.user_id=user.id');
+      $this->db->join('group', 'group.id=user.group');
       $this->db->group_by('user.id');
       $this->db->where(['username'=>$user, 'password'=>$pass_to_compare, 'status'=>1]);
-      $result = $this->db->get($this->tableName)->result_object();
+      $result = $this->db->get($this->table)->result_object();
       // var_dump(count($result),$this->db->last_query());die;
       if (count($result) > 0) {
          return $result;
@@ -117,8 +117,7 @@ class Usermodel extends MY_Model {
       return $return;
    }
    
-   public function findiduser($id)
-   {
+   public function findiduser($id){
 	    $query = $this->db->query('SELECT id FROM user WHERE pegawai_id = '.$id.' LIMIT 1');
 		$row = $query->row();
 		return $row->id;
