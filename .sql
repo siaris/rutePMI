@@ -8079,3 +8079,7 @@ ALTER TABLE `module`
 --
 ALTER TABLE `module`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+INSERT INTO `group` (`name`, `description`, `default_link`) VALUES
+('OFFICER ADMIN', NULL, ''),
+('FIELD OPERATOR', NULL, '');
