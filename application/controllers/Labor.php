@@ -177,7 +177,7 @@ class Labor extends MY_Controller {
         return $p;
     }
 
-    public function get_j($id){
+    function get_j($id){
         $j = $this->Labormodel->queryOne('id = '.$id,'json_v','');
         return !empty($j)?json_decode($j,TRUE):[];
     }
