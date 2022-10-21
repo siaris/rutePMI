@@ -1,19 +1,56 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.0.12/dc.min.css" integrity="sha512-uHCMYHmu81oruDl1bOy5twa5LKyoU2WkCx5F+nHueev7RPOlwBHFSj92QIqisAwTMMvpirUVp1ziM7W8nxUOJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <section class="content" id="app">
 <div class="row">
-<?/*    
-<div class="col-lg-3 col-xs-6">
-        <div class="small-box bg-green">
+   
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="">FILTER</label>
+                    <select name="" id="" class="form-control">
+                        <option value=""></option>
+                        <? foreach($dd as $k=>$v){
+                            echo '<option value="'.$k.'">'.$v.'</option>';
+                        }?>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-yellow">
             <div class="inner">
-                <h3>180</h3>
-                <p>LABOR</p>
+                <h3>{{totalReady}}</h3>
+                <p>LABOR READY</p>
             </div>
             <div class="icon">
                 <i class="fa fa-user-o"></i>
             </div>
         </div>
     </div>
-*/?>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>{{totalOnGoing}}</h3>
+                <p>LABOR ONGOING</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-grey">
+            <div class="inner">
+                <h3>{{totalFinished}}</h3>
+                <p>LABOR COMPLETED</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+    </div>
+
 </div>
 </section>
 <script src="https://unpkg.com/vue@2.3.2/dist/vue.min.js"></script>
@@ -26,7 +63,9 @@ const app = new Vue({
     el:'#app',
 	data() {
         return{
-            totalKK:0
+            totalOnGoing: 0,
+            totalReady: 0,
+            totalFinished: 0
         }}
 })
 </script>
