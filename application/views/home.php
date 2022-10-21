@@ -7,12 +7,15 @@
             <div class="box-body">
                 <div class="form-group">
                     <label for="">FILTER</label>
-                    <select name="" id="" class="form-control">
+                    <select v-model="filter" class="form-control">
                         <option value=""></option>
                         <? foreach($dd as $k=>$v){
                             echo '<option value="'.$k.'">'.$v.'</option>';
                         }?>
                     </select>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-1"><button @click.prevent="getDataReport()" class="btn btn-primary" id="do-load">Load Data</button></div>
                 </div>
             </div>
         </div>
@@ -63,9 +66,42 @@ const app = new Vue({
     el:'#app',
 	data() {
         return{
+            filter: '',
+            result: [],
             totalOnGoing: 0,
             totalReady: 0,
             totalFinished: 0
-        }}
+        }},
+    mounted: function(){
+		$('#do-load').click()		
+	},
+    methods: {
+        async getDataReport(){
+            $('#do-load').addClass('disabled')
+            this.totalReady = this.totalFinished = this.totalOnGoing = 0
+            let data = new FormData()
+            data.append('q', this.filter);
+            this.result = await axios.post('<?= BASEURL?>/apis/dashboard/', data, {crossdomain: false})
+			.then((resp) => {
+				return resp.data
+			})
+            if(this.result.length > 0) this.processResult()
+            $('#do-load').removeClass('disabled')
+            return
+        },
+        processResult(){
+            for(o of this.result){
+                switch (o.status){
+                    case 'P0':
+                        this.totalReady += 1; break
+                    case 'E':
+                        this.totalFinished += 1; break
+                    default:
+                        this.totalOnGoing += 1; break
+                }
+            }
+            return
+        }
+    }
 })
 </script>
