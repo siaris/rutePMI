@@ -46,11 +46,11 @@ class Apis extends REST_Controller {
         $return = '';
         switch($vQ[0]){
             case 'UPT':
-                $return = ' and kronologi like "%.31" ';
+                $return = ' and kronologi like "%.'.$vQ[1].'" ';
                 break;
             default:
                 $key = $vQ[0] == 'TUJUAN'?'kecamatan_domisili':'jenis_kelamin';
-                $return = ' and json_v like \'"'.$key.'":"'.$vQ[1].'"\' ';
+                $return = ' and json_v like \'%"'.$key.'":"'.$vQ[1].'"%\' ';
                 break;
         }
         return $return;
